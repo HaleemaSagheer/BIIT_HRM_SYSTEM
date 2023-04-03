@@ -16,7 +16,36 @@ const JobPost = ({navigation}) => {
   const [jobType, setJobType] = useState('');
   const [jobDescription, setJobDescription] = useState('');
 
-  const handlePost = async () => {};
+  const handlePost = async () => {
+    try {
+      const response = await fetch(
+        `http://192.168.18.66/BIIT_HRM_System/api/Hr/JobPost`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            job_title: jobtitle,
+            job_experience: jobExperience,
+            job_qualification: jobQualification,
+            number_of_vacancies: numberOfVacencies,
+            due_date: dueDate,
+            job_location: jobLocation,
+            salary_range: salaryRange,
+            job_type: jobType,
+            job_description: jobDescription,
+          }),
+        },
+      );
+      navigation.navigate('Login');
+
+      const data = await response.json();
+    } catch (error) {
+      console.error(error);
+      // handle error here, such as displaying error message
+    }
+  };
 
   return (
     <ScrollView>

@@ -24,7 +24,7 @@ export default function Register({navigation}) {
     try {
       if (password == confirmPassword) {
         const response = await fetch(
-          `http://192.168.43.39/BIITHRMSystem/api/User/RegisterUser`,
+          `http://192.168.18.66/BIIT_HRM_System/api/User/RegisterUser`,
           {
             method: 'POST',
             headers: {

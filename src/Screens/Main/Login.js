@@ -21,7 +21,7 @@ export default function Login({navigation}) {
   const loginHandler = async () => {
     try {
       const response = await fetch(
-        `http://192.168.29.172/BIITHRMSystem/api/User/Login?email=${email}&password=${password}`,
+        `http://192.168.18.66/BIIT_HRM_System/api/User/Login?email=${email}&password=${password}`,
         // `http://192.168.18.66/BIITHRMSystem/api/User/Login?email=${email}&password=${password} `,
         {
           method: 'Post',
