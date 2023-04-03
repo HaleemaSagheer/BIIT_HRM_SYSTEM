@@ -106,6 +106,7 @@ export default function Login({navigation}) {
         }}
         style={styles.input}
       />
+      {/* BUTTON */}
       <Button mode="contained" style={styles.btn} onPress={loginHandler}>
         Login
       </Button>
