@@ -7,6 +7,7 @@ import LeavesManagement from '../Screens/HR/LeavesManagement';
 import AttendanceReport from '../Screens/HR/AttendanceReport';
 import HR from '../Screens/HR/HR';
 import AllJobs from '../Screens/HR/AllJobs';
+import JobDetails from '../Screens/HR/JobDetails';
 
 const Drawer = createDrawerNavigator();
 
@@ -21,6 +22,11 @@ const HrNavigator = () => {
       <Drawer.Screen name="AllJobs" component={AllJobs} />
       <Drawer.Screen name="LeavesManagement" component={LeavesManagement} />
       <Drawer.Screen name="AttendanceReport" component={AttendanceReport} />
+      <Drawer.Screen
+        options={{drawerItemStyle: {height: 0}}}
+        name="JobDetails"
+        component={JobDetails}
+      />
     </Drawer.Navigator>
   );
 };
