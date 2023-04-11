@@ -18,10 +18,10 @@ const HrNavigator = () => {
       screenOptions={{headerShown: true}}
       drawerContent={props => <CustomDrawer {...props} />}>
       <Drawer.Screen name="HR" component={HR} />
-      <Drawer.Screen name="JobPost" component={JobPost} />
-      <Drawer.Screen name="AllJobs" component={AllJobs} />
-      <Drawer.Screen name="LeavesManagement" component={LeavesManagement} />
-      <Drawer.Screen name="AttendanceReport" component={AttendanceReport} />
+      <Drawer.Screen name="Job Post" component={JobPost} />
+      <Drawer.Screen name="All Jobs" component={AllJobs} />
+      <Drawer.Screen name="Leaves Management" component={LeavesManagement} />
+      <Drawer.Screen name="Attendance Report" component={AttendanceReport} />
       <Drawer.Screen
         options={{drawerItemStyle: {height: 0}}}
         name="JobDetails"

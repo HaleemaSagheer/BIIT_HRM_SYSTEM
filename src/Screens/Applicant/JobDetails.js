@@ -6,9 +6,12 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const JobDetails = ({route}) => {
+const JobDetails = ({navigation, route}) => {
   const {item} = route.params;
 
+  const handleApply = ({item}) => {
+    navigation.navigate('Apply', {item});
+  };
   return (
     <View style={styles.container}>
       <Text> Job Detail</Text>
@@ -55,6 +58,17 @@ const JobDetails = ({route}) => {
             </Paragraph>
           </View>
         </Card.Content>
+        <Card.Actions style={styles.cardActions}>
+          {/* <View 
+          > */}
+          <Button
+            mode="contained"
+            onPress={() => handleApply({item})}
+            style={{backgroundColor: 'blue'}}>
+            Apply
+          </Button>
+          {/* </View> */}
+        </Card.Actions>
       </Card>
     </View>
   );
@@ -67,6 +81,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     flex: 1,
     borderColor: colors.dark,
+  },
+  actioncontainer: {
+    flex: 1,
+    justifyContent: 'center',
   },
   title: {
     fontSize: 25,
@@ -101,5 +119,8 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  cardActions: {
+    marginTop: 5,
   },
 });

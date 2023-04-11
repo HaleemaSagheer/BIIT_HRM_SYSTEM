@@ -7,6 +7,7 @@ import {
   ToastAndroid,
 } from 'react-native';
 import {React, useEffect, useState} from 'react';
+import IP from '../../component/IP';
 
 import {Button, TextInput, Searchbar} from 'react-native-paper';
 import {Icon} from 'react-native-paper/lib/typescript/components/Avatar/Avatar';
@@ -21,7 +22,7 @@ export default function Login({navigation}) {
   const loginHandler = async () => {
     try {
       const response = await fetch(
-        `http://192.168.18.66/BIIT_HRM_System/api/User/Login?email=${email}&password=${password}`,
+        `http://${IP}/BIIT_HRM_System/api/User/Login?email=${email}&password=${password}`,
         // `http://192.168.18.66/BIITHRMSystem/api/User/Login?email=${email}&password=${password} `,
         {
           method: 'Post',

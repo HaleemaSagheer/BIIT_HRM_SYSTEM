@@ -36,17 +36,7 @@ export default function Applicant({route, navigation}) {
         />
       </View>
       <Text style={styles.title}>Welcome {name}</Text>
-      <View style={styles.innerView}>
-        <TouchableOpacity onPress={onPressJobs} style={styles.btnView}>
-          <Text style={styles.btntext}> Jobs </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={onPressProfile} style={styles.btnView}>
-          <Text style={styles.btntext}> profile </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={onPressApplications} style={styles.btnView}>
-          <Text style={styles.btntext}> Applications </Text>
-        </TouchableOpacity>
-      </View>
+      {/*  */}
     </View>
   );
 }

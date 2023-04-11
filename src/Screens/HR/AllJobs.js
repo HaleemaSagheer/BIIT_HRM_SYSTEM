@@ -6,10 +6,8 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const AllJobs = () => {
+const AllJobs = ({navigation}) => {
   const [jobsData, setJobsData] = useState([]);
-  const handleDelete = () => {};
-  const handleEdit = () => {};
   useEffect(() => {
     fetchdata();
   }, []);
@@ -24,43 +22,19 @@ const AllJobs = () => {
       console.error(error);
     }
   };
+
+  const handleDelete = () => {};
+  const handleEdit = () => {};
+  const handleViewJob = ({item}) => {
+    navigation.navigate('JobDetails', {
+      item,
+    });
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.title}>All Jobs</Text>
       <FlatList
         data={jobsData}
-        // <View>
-        //   <Card>
-        //     <Text>Job Title: {item.job_title}</Text>
-        //   <Text> Experience required:{item.job_experience}</Text>
-        //   <Text> Qualification Required:{item.job_qualification}</Text>
-        //   <Text> Number of Vacencies:{item.number_of_vacancies}</Text>
-        //   <Text> Due Date:{item.due_date}</Text>
-        //   <Text> Job Location:{item.job_location}</Text>
-        //   <Text> Salary Range:{item.salary_range}</Text>
-        //   <Text> Job Type:{item.job_type}</Text>
-        //   <Text> Job Description:{item.job_description}</Text>
-        //   <Button style={styles.btn} mode="contained" onPress={handleDelete}>
-        //     Delete Job
-        //   </Button>
-        //   <Button style={styles.btn} mode="contained" onPress={handleEdit}>
-        //     Edit Job
-        //   </Button>
-        //   </Card>
-        // </View>
-
-        // <Card style={styles.cardContainer}>
-        // <Card.Title title={item.name} />
-        // <Card.Content style={styles.cardContent}>
-        // <Paragraph>{item.email}</Paragraph>
-        // </Card.Content>
-        // <Card.Cover source={{uri: item.imageUri}} />
-        // <Card.Actions style={styles.cardActions}>
-        // <Button mode="contained">Delete</Button>
-        // </Card.Actions>
-        // </Card>
-        // <Card.Title style={{marginBottom: 5}} title={item.job_location} />
-        //   <Card.Title style={{marginBottom: 5}} title={item.salary_range} />
         renderItem={({item}) => (
           <Card style={styles.cardContainer}>
             <Card.Title title={item.job_title} titleStyle={styles.cardtitle} />
@@ -87,10 +61,15 @@ const AllJobs = () => {
               </View>
             </Card.Content>
             <Card.Actions style={styles.cardActions}>
-              <Button mode="contained">Delete</Button>
-              <Button mode="contained">Edit</Button>
-              {/* <Button mode="contained" onPress={() => handleDelete(item)}>Delete</Button>
-<Button mode="contained" onPress={() => handleEdit(item)}>Edit</Button> */}
+              <Button mode="contained" onPress={() => handleViewJob({item})}>
+                ViewJob
+              </Button>
+              <Button mode="contained" onPress={() => handleDelete({item})}>
+                Delete
+              </Button>
+              <Button mode="contained" onPress={() => handleEdit({item})}>
+                Edit
+              </Button>
             </Card.Actions>
           </Card>
         )}

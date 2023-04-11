@@ -4,8 +4,12 @@ import {React, useState} from 'react';
 import {Button, TextInput} from 'react-native-paper';
 import {ScrollView} from 'react-native-gesture-handler';
 import {colors} from '../../color/Theme';
+import IP from '../../component/IP';
+import CheckBox from '@react-native-community/checkbox';
 
 export default function Register({navigation}) {
+  const [isEducated, setIsEducated] = useState(false);
+  const [isExperienced, setIsExperienced] = useState(false);
   const [fname, setFname] = useState('');
   const [lname, setLname] = useState('');
   const [email, setEmail] = useState('');
@@ -24,7 +28,7 @@ export default function Register({navigation}) {
     try {
       if (password == confirmPassword) {
         const response = await fetch(
-          `http://192.168.18.66/BIIT_HRM_System/api/User/RegisterUser`,
+          `http://${IP}/BIIT_HRM_System/api/User/RegisterUser`,
           {
             method: 'POST',
             headers: {
@@ -152,6 +156,24 @@ export default function Register({navigation}) {
           right={<TextInput.Icon icon="eye" />}
           style={styles.input}
         />
+        <View style={styles.CheckStyle}>
+          <View style={{flexDirection: 'row'}}>
+            <CheckBox
+              style={styles.CheckStyle}
+              value={isEducated}
+              onValueChange={val => setIsEducated(val)}
+            />
+            <Text style={{color: colors.dark}}>IsEducated</Text>
+          </View>
+          <View style={{flexDirection: 'row'}}>
+            <CheckBox
+              style={styles.CheckStyle}
+              value={isExperienced}
+              onValueChange={val => setIsExperienced(val)}
+            />
+            <Text style={{color: colors.dark}}>IsExperienced</Text>
+          </View>
+        </View>
         <Button
           style={styles.registerbtn}
           mode="contained"
@@ -173,6 +195,10 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.primary,
     flex: 1,
+  },
+  CheckStyle: {
+    marginLeft: 10,
+    color: colors.dark,
   },
   ImageView: {
     marginLeft: 110,
