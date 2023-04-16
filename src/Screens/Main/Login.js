@@ -32,35 +32,44 @@ export default function Login({navigation}) {
       const data = await response.json();
       console.log(data);
       const role = data.role;
-      // ToastAndroid.show(data, ToastAndroid.SHORT);
-      //console.log(role);
-      //navigation.navigate('Root', { screen: 'Settings' });
       if (role == 'Applicant') {
-        navigation.navigate('ApplicantNavigator', {
-          screen: 'Applicant',
-          params: {name: data.name},
-        });
+        navigation.navigate('ApplicantNavigator', {userData: data});
       }
+      // if (role == 'Applicant') {
+      //   navigation.navigate('ApplicantNavigator', {
+      //     screen: 'Applicant',
+      //     params: {name: data.name},
+      //   });
+      // }
+      // if (role == 'Employee') {
+      //   // navigation.navigate('Screens', {screen: 'Employee'}, {name: data.name});
+      //   navigation.navigate('EmployeeNavigator', {
+      //     screen: 'Employee',
+      //     params: {name: data.name},
+      //   });
+      // }
       if (role == 'Employee') {
-        // navigation.navigate('Screens', {screen: 'Employee'}, {name: data.name});
-        navigation.navigate('EmployeeNavigator', {
-          screen: 'Employee',
-          params: {name: data.name},
-        });
+        navigation.navigate('EmployeeNavigator', {userData: data});
       }
+      // if (role == 'Guard') {
+      //   //navigation.navigate('Screens', {screen: 'Guard'}, {name: data.name});
+      //   navigation.navigate('GuardNavigator', {
+      //     screen: 'Guard',
+      //     params: {name: data.name},
+      //   });
+      // }
       if (role == 'Guard') {
-        //navigation.navigate('Screens', {screen: 'Guard'}, {name: data.name});
-        navigation.navigate('GuardNavigator', {
-          screen: 'Guard',
-          params: {name: data.name},
-        });
+        navigation.navigate('GuardNavigator', {userData: data});
       }
+      // if (role == 'HR') {
+      //   //navigation.navigate('Screens', {screen: 'HR'}, {name: data.name});
+      //   navigation.navigate('HrNavigator', {
+      //     screen: 'HR',
+      //     params: {name: data.name},
+      //   });
+      // }
       if (role == 'HR') {
-        //navigation.navigate('Screens', {screen: 'HR'}, {name: data.name});
-        navigation.navigate('HrNavigator', {
-          screen: 'HR',
-          params: {name: data.name},
-        });
+        navigation.navigate('HrNavigator', {userData: data});
       }
     } catch (err) {
       console.log(err);

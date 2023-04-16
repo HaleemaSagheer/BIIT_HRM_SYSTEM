@@ -16,28 +16,61 @@ import CustomDrawer from '../component/CustomDrawer';
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
-export default function ApplicantNavigator() {
+export default function ApplicantNavigator({route}) {
+  //ye route wahaa use hta jahaa py hum koi params recive krr rhy hty ye userData kahaa sy aye ga
+  const {userData} = route.params;
+
   return (
     <Drawer.Navigator
       initialRouteName="Applicant"
       screenOptions={{headerShown: true}}
       drawerContent={props => <CustomDrawer {...props} />}>
-      <Drawer.Screen name="Applicant" component={Applicant} />
-      <Stack.Screen name="Jobs" component={Jobs} />
-      <Drawer.Screen name="Profile" component={Profile} />
-      <Drawer.Screen name="Applications" component={Applications} />
-      <Drawer.Screen name="Personal" component={Personal} />
-      <Drawer.Screen name="Education" component={Education} />
-      <Drawer.Screen name="Experience" component={Experience} />
+      <Drawer.Screen
+        name="Applicant"
+        component={Applicant}
+        initialParams={userData}
+      />
+
+      <Drawer.Screen name="Jobs" component={Jobs} initialParams={{userData}} />
+      <Drawer.Screen
+        name="Profile"
+        component={Profile}
+        initialParams={{userData}}
+      />
+      <Drawer.Screen
+        name="Applications"
+        component={Applications}
+        initialParams={{userData}}
+      />
+      <Drawer.Screen
+        options={{drawerItemStyle: {height: 0}}}
+        name="Personal"
+        component={Personal}
+        initialParams={{userData}}
+      />
+      <Drawer.Screen
+        options={{drawerItemStyle: {height: 0}}}
+        name="Education"
+        component={Education}
+        initialParams={{userData}}
+      />
+      <Drawer.Screen
+        options={{drawerItemStyle: {height: 0}}}
+        name="Experience"
+        component={Experience}
+        initialParams={{userData}}
+      />
       <Drawer.Screen
         options={{drawerItemStyle: {height: 0}}}
         name="JobDetails"
         component={JobDetails}
+        initialParams={{userData}}
       />
       <Drawer.Screen
         options={{drawerItemStyle: {height: 0}}}
         name="Apply"
         component={Apply}
+        initialParams={{userData}}
       />
     </Drawer.Navigator>
   );
