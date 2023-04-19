@@ -135,7 +135,10 @@ const ImagePicker = ({imageData, setImageData}) => {
 
   return (
     <View style={styles.container}>
-      <Image source={{uri: imageData.uri}} style={styles.imageStyle} />
+      <Image
+        source={{uri: imageData.uri ? imageData.uri : null}}
+        style={styles.imageStyle}
+      />
       <View style={styles.buttonContainer}>
         <Button
           mode="contained"

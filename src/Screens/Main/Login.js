@@ -29,55 +29,33 @@ export default function Login({navigation}) {
         },
       );
       console.log(response);
+      //console.log('response');
       const data = await response.json();
+      //console.log('Data');
       console.log(data);
-      const role = data.role;
-      if (role == 'Applicant') {
+      //console.log('before');
+      //console.log(data[0]);
+      console.log('Role');
+
+      console.log(data.role);
+      if (data.role == 'Applicant') {
         navigation.navigate('ApplicantNavigator', {userData: data});
       }
-      // if (role == 'Applicant') {
-      //   navigation.navigate('ApplicantNavigator', {
-      //     screen: 'Applicant',
-      //     params: {name: data.name},
-      //   });
-      // }
-      // if (role == 'Employee') {
-      //   // navigation.navigate('Screens', {screen: 'Employee'}, {name: data.name});
-      //   navigation.navigate('EmployeeNavigator', {
-      //     screen: 'Employee',
-      //     params: {name: data.name},
-      //   });
-      // }
-      if (role == 'Employee') {
+      if (data.role == 'Employee') {
         navigation.navigate('EmployeeNavigator', {userData: data});
       }
-      // if (role == 'Guard') {
-      //   //navigation.navigate('Screens', {screen: 'Guard'}, {name: data.name});
-      //   navigation.navigate('GuardNavigator', {
-      //     screen: 'Guard',
-      //     params: {name: data.name},
-      //   });
-      // }
-      if (role == 'Guard') {
+      if (data.role == 'Guard') {
         navigation.navigate('GuardNavigator', {userData: data});
       }
-      // if (role == 'HR') {
-      //   //navigation.navigate('Screens', {screen: 'HR'}, {name: data.name});
-      //   navigation.navigate('HrNavigator', {
-      //     screen: 'HR',
-      //     params: {name: data.name},
-      //   });
-      // }
-      if (role == 'HR') {
+
+      if (data.role == 'HR') {
         navigation.navigate('HrNavigator', {userData: data});
       }
     } catch (err) {
       console.log(err);
     }
   };
-  // const loginHandler = () => {
-  //   navigation.navigate('DashBoard');
-  // };
+
   const handleRegister = () => {
     navigation.navigate('Register');
   };

@@ -7,6 +7,7 @@ import {
   ToastAndroid,
   FlatList,
 } from 'react-native';
+
 import React, {useState, useEffect} from 'react';
 import {Button, TextInput, RadioButton} from 'react-native-paper';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
@@ -14,6 +15,8 @@ import {colors} from '../../color/Theme';
 import Experience from './Experience';
 import ImagePicker from '../../component/ImagePicker';
 import IP from '../../component/IP';
+import DatePicker from 'react-native-date-picker';
+import {IconButton} from 'react-native-paper';
 export default function Personal({route, navigation}) {
   const [fname, setFname] = useState('');
   const [lname, setLname] = useState('');
@@ -24,9 +27,23 @@ export default function Personal({route, navigation}) {
   const [gender, setGender] = useState('male');
   const [email, setEmail] = useState('');
   const [imageData, setImageData] = useState({});
+  const [date, setDate] = useState(new Date());
+  const [show, setShow] = useState(false);
+  //const [open, setOpen] = useState(false);
   // useEffect(() => {
   //   clearStates();
   // }, []);
+  // const onChange = (event, selectedDate) => {
+  //   const currentDate = selectedDate;
+  //   setOpen(false);
+  //   setDate(currentDate);
+  //   setDob(date);
+  // };
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setShow(false);
+    setDate(currentDate);
+  };
   const {userData} = route.params;
   // console.log('id' + userData.id);
   const clearStates = () => {
@@ -118,7 +135,7 @@ export default function Personal({route, navigation}) {
           }}
           style={styles.input}
         />
-        <TextInput
+        {/* <TextInput
           label="DOB"
           value={dob}
           mode={'outlined'}
@@ -126,7 +143,52 @@ export default function Personal({route, navigation}) {
             setDob(val);
           }}
           style={styles.input}
-        />
+        /> */}
+        {/* <View style={styles.dateContainer}>
+          <Text style={{color: colors.dark, fontSize: 15}}>DOB :</Text>
+          <Text>{date.toLocaleDateString()}</Text>
+          <IconButton
+            icon="clipboard-text-clock-outline"
+            mode="contained"
+            iconColor={colors.dark}
+            size={30}
+            onPress={() => setOpen(!open)}
+          />
+        </View>
+        {open && (
+          <DatePicker
+            testID="datePicker"
+            value={date}
+            mode={'date'}
+            onChange={onChange}
+            display={'inline'}
+          />
+        )} */}
+        <View style={styles.dateContainer}>
+          <Text style={styles.darkText}>{date.toLocaleDateString()}</Text>
+          <IconButton
+            icon="clipboard-text-clock-outline"
+            mode="contained"
+            iconColor={colors.dark}
+            size={30}
+            onPress={() => setShow(!show)}
+          />
+        </View>
+        {show && (
+          <DatePicker
+            modal
+            mode={'date'}
+            open={show}
+            date={date}
+            onConfirm={date => {
+              setShow(false);
+              setDate(date);
+            }}
+            onCancel={() => {
+              setShow(false);
+            }}
+          />
+        )}
         <TextInput
           label="Address"
           value={address}
@@ -219,5 +281,13 @@ const styles = StyleSheet.create({
     borderColor: '#472183',
     borderRadius: 10,
     borderWidth: 2,
+  },
+  dateContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  darkText: {
+    color: colors.dark,
   },
 });
