@@ -17,35 +17,35 @@ import ImagePicker from '../../component/ImagePicker';
 import IP from '../../component/IP';
 import DatePicker from 'react-native-date-picker';
 import {IconButton} from 'react-native-paper';
+import Input from '../../component/Input';
 export default function Personal({route, navigation}) {
-  const [fname, setFname] = useState('');
-  const [lname, setLname] = useState('');
-  const [cnic, setCnic] = useState();
-  const [dob, setDob] = useState('');
-  const [mobileNo, setMobileNo] = useState();
-  const [address, setAddress] = useState('');
-  const [gender, setGender] = useState('male');
-  const [email, setEmail] = useState('');
-  const [imageData, setImageData] = useState({});
+  const {userData} = route.params;
+  // console.log('Checking');
+  // console.log(userData.Fname);
+  // console.log('Data');
+  // console.log(userData);
+  // console.log(userData.address);
+  const [fname, setFname] = useState(userData.Fname);
+  const [lname, setLname] = useState(userData.Lname);
+  const [cnic, setCnic] = useState(userData.cnic);
+  const [dob, setDob] = useState(userData.dob);
+  const [mobileNo, setMobileNo] = useState(userData.mobile);
+  const [address, setAddress] = useState(userData.address);
+  const [gender, setGender] = useState(userData.gender);
+  const [email, setEmail] = useState(userData.email);
+  const [imageData, setImageData] = useState({
+    uri: `${imageData}/userData.Image`,
+  });
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
-  //const [open, setOpen] = useState(false);
-  // useEffect(() => {
-  //   clearStates();
-  // }, []);
-  // const onChange = (event, selectedDate) => {
-  //   const currentDate = selectedDate;
-  //   setOpen(false);
-  //   setDate(currentDate);
-  //   setDob(date);
-  // };
+
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
     setShow(false);
     setDate(currentDate);
   };
-  const {userData} = route.params;
-  // console.log('id' + userData.id);
+  // const {userData} = route.params;
+  // // console.log('id' + userData.id);
   const clearStates = () => {
     setFname('');
     setLname('');
@@ -97,9 +97,8 @@ export default function Personal({route, navigation}) {
   };
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.container}>
-        <Text style={styles.title}>Personal Infromation</Text>
-        <TextInput
+      <Text style={styles.title}>Personal Infromation</Text>
+      {/* <TextInput
           label="FirstName"
           value={fname}
           mode={'outlined'}
@@ -107,8 +106,16 @@ export default function Personal({route, navigation}) {
             setFname(val);
           }}
           style={styles.input}
-        />
-        <TextInput
+        /> */}
+      <Input
+        title="First Name"
+        placeholder={'Your First name'}
+        variant="simple"
+        value={fname}
+        setValue={setFname}
+      />
+
+      {/* <TextInput
           label="LastName"
           value={lname}
           mode={'outlined'}
@@ -116,26 +123,47 @@ export default function Personal({route, navigation}) {
             setLname(val);
           }}
           style={styles.input}
-        />
-        <TextInput
-          label="CNIC"
-          value={cnic}
-          mode={'outlined'}
-          onChangeText={val => {
-            setCnic(val);
-          }}
-          style={styles.input}
-        />
-        <TextInput
-          label="Mobile No"
-          value={mobileNo}
-          mode={'outlined'}
-          onChangeText={val => {
-            setMobileNo(val);
-          }}
-          style={styles.input}
-        />
-        {/* <TextInput
+        /> */}
+      <Input
+        title="Last Name"
+        placeholder={'Your Last name'}
+        variant="simple"
+        value={lname}
+        setValue={setLname}
+      />
+      {/* <TextInput
+        label="CNIC"
+        value={cnic}
+        mode={'outlined'}
+        onChangeText={val => {
+          setCnic(val);
+        }}
+        style={styles.input}
+      /> */}
+      <Input
+        title="CNIC"
+        placeholder="Enter your Cnic"
+        variant="simple"
+        value={cnic}
+        setValue={setCnic}
+      />
+      {/* <TextInput
+        label="Mobile No"
+        value={mobileNo}
+        mode={'outlined'}
+        onChangeText={val => {
+          setMobileNo(val);
+        }}
+        style={styles.input}
+      /> */}
+      <Input
+        title="Phone Number"
+        placeholder={'Phone Number'}
+        variant="simple"
+        value={mobileNo}
+        setValue={setMobileNo}
+      />
+      {/* <TextInput
           label="DOB"
           value={dob}
           mode={'outlined'}
@@ -144,7 +172,7 @@ export default function Personal({route, navigation}) {
           }}
           style={styles.input}
         /> */}
-        {/* <View style={styles.dateContainer}>
+      {/* <View style={styles.dateContainer}>
           <Text style={{color: colors.dark, fontSize: 15}}>DOB :</Text>
           <Text>{date.toLocaleDateString()}</Text>
           <IconButton
@@ -164,65 +192,78 @@ export default function Personal({route, navigation}) {
             display={'inline'}
           />
         )} */}
-        <View style={styles.dateContainer}>
-          <Text style={styles.darkText}>{date.toLocaleDateString()}</Text>
-          <IconButton
-            icon="clipboard-text-clock-outline"
-            mode="contained"
-            iconColor={colors.dark}
-            size={30}
-            onPress={() => setShow(!show)}
-          />
-        </View>
-        {show && (
-          <DatePicker
-            modal
-            mode={'date'}
-            open={show}
-            date={date}
-            onConfirm={date => {
-              setShow(false);
-              setDate(date);
-            }}
-            onCancel={() => {
-              setShow(false);
-            }}
-          />
-        )}
-        <TextInput
-          label="Address"
-          value={address}
-          mode={'outlined'}
-          onChangeText={val => {
-            setAddress(val);
-          }}
-          style={styles.input}
+      <Text style={styles.text}>Date Of Birth</Text>
+      <View style={styles.dateContainer}>
+        <Text style={styles.darkText}>{date.toLocaleDateString()}</Text>
+        <IconButton
+          icon="clipboard-text-clock-outline"
+          mode="contained"
+          iconColor={colors.dark}
+          size={30}
+          onPress={() => setShow(!show)}
         />
-        <TextInput
-          label="Email"
-          value={email}
-          mode={'outlined'}
-          onChangeText={val => {
-            setEmail(val);
-          }}
-          style={styles.input}
-        />
-
-        <Text style={styles.text}> Choose your Gender</Text>
-        <RadioButton.Group
-          value={gender}
-          onValueChange={value => setGender(value)}>
-          <RadioButton.Item uncheckedColor="red" label="Male" value="male" />
-          <RadioButton.Item
-            uncheckedColor="red"
-            label="Female"
-            value="female"
-          />
-        </RadioButton.Group>
       </View>
+      {show && (
+        <DatePicker
+          modal
+          mode={'date'}
+          open={show}
+          date={date}
+          onConfirm={date => {
+            setShow(false);
+            setDate(date);
+          }}
+          onCancel={() => {
+            setShow(false);
+          }}
+        />
+      )}
+      {/* <TextInput
+        label="Address"
+        value={address}
+        mode={'outlined'}
+        onChangeText={val => {
+          setAddress(val);
+        }}
+        style={styles.input}
+      /> */}
+      <Input
+        title="Address"
+        placeholder={'Address'}
+        variant="icon"
+        icon="location-pin"
+        value={address}
+        setValue={setAddress}
+      />
+      {/* <TextInput
+        label="Email"
+        value={email}
+        mode={'outlined'}
+        onChangeText={val => {
+          setEmail(val);
+        }}
+        style={styles.input}
+      /> */}
+      <Input
+        title="Email"
+        placeholder={'Your email address'}
+        variant="simple"
+        icon={'email-outline'}
+        value={email}
+        setValue={setEmail}
+      />
+
+      <Text style={styles.text}> Choose your Gender</Text>
+      <RadioButton.Group
+        value={gender}
+        onValueChange={value => setGender(value)}>
+        <RadioButton.Item uncheckedColor="red" label="Male" value="male" />
+        <RadioButton.Item uncheckedColor="red" label="Female" value="female" />
+      </RadioButton.Group>
+
       <View>
         <View style={styles.imageContainer}>
-          <Text style={styles.title}>Attach Your Image</Text>
+          <Text style={styles.text}>Attach Your Image</Text>
           <ImagePicker imageData={imageData} setImageData={setImageData} />
           <Button mode="contained" style={styles.btn} onPress={saveHandler}>
             Save
@@ -235,16 +276,17 @@ export default function Personal({route, navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
+    paddingHorizontal: 40,
+    paddingVertical: 40,
     backgroundColor: colors.primary,
   },
   title: {
     marginTop: 10,
-    marginBottom: 5,
-    fontSize: 15,
+    marginBottom: 10,
+    fontSize: 20,
     fontWeight: '700',
-    color: colors.dark,
-    alignSelf: 'flex-start',
+    color: colors.black,
+    alignSelf: 'center',
   },
   input: {
     marginLeft: 20,
@@ -257,6 +299,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: colors.dark,
+    fontWeight: '700',
   },
   btn: {
     width: '50%',
@@ -288,6 +331,6 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   darkText: {
-    color: colors.dark,
+    color: colors.black,
   },
 });

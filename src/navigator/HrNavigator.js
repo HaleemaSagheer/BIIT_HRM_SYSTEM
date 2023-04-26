@@ -11,21 +11,39 @@ import JobDetails from '../Screens/HR/JobDetails';
 
 const Drawer = createDrawerNavigator();
 
-const HrNavigator = () => {
+const HrNavigator = ({route}) => {
+  const {userData} = route.params;
   return (
     <Drawer.Navigator
       initialRouteName="HR"
       screenOptions={{headerShown: true}}
       drawerContent={props => <CustomDrawer {...props} />}>
-      <Drawer.Screen name="HR" component={HR} />
-      <Drawer.Screen name="Job Post" component={JobPost} />
-      <Drawer.Screen name="All Jobs" component={AllJobs} />
-      <Drawer.Screen name="Leaves Management" component={LeavesManagement} />
-      <Drawer.Screen name="Attendance Report" component={AttendanceReport} />
+      <Drawer.Screen name="HR" component={HR} initialParams={{userData}} />
+      <Drawer.Screen
+        name="Job Post"
+        component={JobPost}
+        initialParams={{userData}}
+      />
+      <Drawer.Screen
+        name="All Jobs"
+        component={AllJobs}
+        initialParams={{userData}}
+      />
+      <Drawer.Screen
+        name="Leaves Management"
+        component={LeavesManagement}
+        initialParams={{userData}}
+      />
+      <Drawer.Screen
+        name="Attendance Report"
+        component={AttendanceReport}
+        initialParams={{userData}}
+      />
       <Drawer.Screen
         options={{drawerItemStyle: {height: 0}}}
         name="JobDetails"
         component={JobDetails}
+        initialParams={{userData}}
       />
     </Drawer.Navigator>
   );

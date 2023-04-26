@@ -2,12 +2,15 @@ import {StyleSheet, Text, View, FlatList} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 import React, {useState} from 'react';
 import {colors} from '../../color/Theme';
+import CheckBox from '@react-native-community/checkbox';
 
 export default function Experience() {
   const [expdata, setExpData] = useState([]);
   const [company, setCompany] = useState('');
   const [title, setTitle] = useState('');
-  const [duration, setDuration] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [currentlyWorking, setCurrentlyWorking] = useState(false);
   const handleSubmit = () => {};
   const handleAddExp = () => {
     setExpData([
@@ -22,6 +25,7 @@ export default function Experience() {
     setTitle('');
     setCompany('');
     setDuration('');
+    setCurrentlyWorking(false);
   };
   const renderExp = ({item}) => (
     <View style={styles.card}>
@@ -53,14 +57,31 @@ export default function Experience() {
           style={styles.input}
         />
         <TextInput
-          label="Duration"
-          value={duration}
+          label="Starting Date"
+          value={startDate}
           mode={'outlined'}
           onChangeText={val => {
-            setDuration(val);
+            setStartDate(val);
           }}
           style={styles.input}
         />
+        <TextInput
+          label="Ending Date"
+          value={endDate}
+          mode={'outlined'}
+          onChangeText={val => {
+            setEndDate(val);
+          }}
+          style={styles.input}
+        />
+        <View style={{flexDirection: 'row'}}>
+          <CheckBox
+            style={styles.CheckStyle}
+            value={currentlyWorking}
+            onValueChange={val => setCurrentlyWorking(val)}
+          />
+          <Text style={{color: colors.dark}}>Still Working?</Text>
+        </View>
         <Button mode="contained" style={styles.btn} onPress={handleAddExp}>
           Add
         </Button>
@@ -77,6 +98,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.primary,
+  },
+  CheckStyle: {
+    marginLeft: 10,
+    color: colors.dark,
   },
   title: {
     marginTop: 10,

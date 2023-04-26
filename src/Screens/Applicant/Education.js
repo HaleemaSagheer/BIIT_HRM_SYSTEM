@@ -2,6 +2,7 @@ import {StyleSheet, Text, View, FlatList} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 import React, {useState} from 'react';
 import {colors} from '../../color/Theme';
+import Input from '../../component/Input';
 
 export default function Education() {
   const [title, setTitle] = useState('');
@@ -40,7 +41,7 @@ export default function Education() {
     <View style={styles.container}>
       <Text style={styles.title}>Educational Infromation </Text>
       <View>
-        <TextInput
+        {/* <TextInput
           label="Title"
           value={title}
           mode={'outlined'}
@@ -48,8 +49,15 @@ export default function Education() {
             setTitle(val);
           }}
           style={styles.input}
+        /> */}
+        <Input
+          title="Title"
+          placeholder={'Degree Title'}
+          variant="simple"
+          value={title}
+          setValue={setTitle}
         />
-        <TextInput
+        {/* <TextInput
           label="Major"
           value={major}
           mode={'outlined'}
@@ -57,8 +65,16 @@ export default function Education() {
             setMajor(val);
           }}
           style={styles.input}
+        /> */}
+
+        <Input
+          title="Major"
+          placeholder={'Major of Degree'}
+          variant="simple"
+          value={major}
+          setValue={setMajor}
         />
-        <TextInput
+        {/* <TextInput
           label="Board"
           value={board}
           mode={'outlined'}
@@ -66,8 +82,15 @@ export default function Education() {
             setBoard(val);
           }}
           style={styles.input}
+        /> */}
+        <Input
+          title="Board "
+          placeholder={'Board'}
+          variant="simple"
+          value={board}
+          setValue={setBoard}
         />
-        <TextInput
+        {/* <TextInput
           label="Passing Year"
           value={passingYear}
           mode={'outlined'}
@@ -75,6 +98,13 @@ export default function Education() {
             setPassingYear(val);
           }}
           style={styles.input}
+        /> */}
+        <Input
+          title="Passing Year"
+          placeholder={'passing Year'}
+          variant="simple"
+          value={passingYear}
+          setValue={setPassingYear}
         />
         <Button mode="contained" style={styles.btn} onPress={handleAddedu}>
           Add
@@ -92,13 +122,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.primary,
+    paddingHorizontal: 40,
+    paddingVertical: 40,
   },
   title: {
-    marginTop: 10,
-
+    marginBottom: 5,
     fontSize: 25,
     fontWeight: '800',
-    color: colors.dark,
+    color: colors.black,
     alignSelf: 'flex-start',
   },
   card: {

@@ -12,12 +12,15 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 const Drawer = createDrawerNavigator();
 
-const EmployeeNavigator = () => {
+const EmployeeNavigator = ({route}) => {
+  const {userData} = route.params;
   return (
     <Drawer.Navigator
       initialRouteName="Employee"
       screenOptions={{headerShown: true}}
-      drawerContent={props => <CustomDrawer {...props} />}>
+      drawerContent={props => (
+        <CustomDrawer {...props} initialParams={userData} />
+      )}>
       <Drawer.Screen
         name="Employee"
         component={Employee}
@@ -26,6 +29,7 @@ const EmployeeNavigator = () => {
             <Ionicons name="person-outline" size={22} color={color} />
           ),
         }}
+        initialParams={userData}
       />
       <Drawer.Screen
         name="Attendance"
@@ -39,6 +43,7 @@ const EmployeeNavigator = () => {
             />
           ),
         }}
+        initialParams={userData}
       />
       <Drawer.Screen
         name="LeavesReport"
@@ -48,6 +53,7 @@ const EmployeeNavigator = () => {
             <FontAwesome5 name="file-alt" size={22} color={color} />
           ),
         }}
+        initialParams={userData}
       />
       <Drawer.Screen
         name="ApplyForLeave"
@@ -57,6 +63,7 @@ const EmployeeNavigator = () => {
             <FontAwesome5 name="file-signature" size={22} color={color} />
           ),
         }}
+        initialParams={userData}
       />
     </Drawer.Navigator>
   );

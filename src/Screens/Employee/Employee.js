@@ -3,7 +3,8 @@ import React from 'react';
 import {colors} from '../../color/Theme';
 
 export default function Employee({route, navigation}) {
-  const {name} = route.params;
+  const userData = route.params;
+  console.log(userData.Fname);
   const onPressAttendance = () => {
     navigation.navigate('Attendance');
   };
@@ -19,18 +20,7 @@ export default function Employee({route, navigation}) {
       <View style={styles.ImageView}>
         <Image style={styles.Image} source={require('../../Images/logo.png')} />
       </View>
-      <Text style={styles.title}>welcome {name}</Text>
-      {/* <View style={styles.innerView}>
-        <TouchableOpacity onPress={onPressAttendance} style={styles.btnView}>
-          <Text style={styles.btntext}> Attendance </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={onPressLeaves} style={styles.btnView}>
-          <Text style={styles.btntext}> Leaves Report </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={onPressLeaveRequest} style={styles.btnView}>
-          <Text style={styles.btntext}> Apply For Leave </Text>
-        </TouchableOpacity>
-      </View> */}
+      <Text style={styles.title}>welcome {userData.Fname}</Text>
     </View>
   );
 }

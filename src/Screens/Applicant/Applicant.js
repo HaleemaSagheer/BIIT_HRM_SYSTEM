@@ -4,7 +4,10 @@ import {colors} from '../../color/Theme';
 // import {TouchableOpacity} from 'react-native-gesture-handler';
 
 export default function Applicant({route, navigation}) {
-  const {name} = route.params;
+  const userData = route.params;
+  // console.log('Applicant');
+  // console.log(userData.Fname);
+
   const onPressProfile = () => {
     navigation.navigate('Profile');
   };
@@ -16,18 +19,6 @@ export default function Applicant({route, navigation}) {
   };
 
   return (
-    // <View>
-    //   <Text style={styles.title}>Applicant</Text>
-    //   <TouchableOpacity onPress={onPressJobs}>
-    //     <Text>Jobs</Text>
-    //   </TouchableOpacity>
-    //   <TouchableOpacity onPress={onPressProfile}>
-    //     <Text>Profile</Text>
-    //   </TouchableOpacity>
-    //   <TouchableOpacity onPress={onPressApplications}>
-    //     <Text> My Applications</Text>
-    //   </TouchableOpacity>
-    // </View>
     <View style={styles.container}>
       <View style={styles.ImageView}>
         <Image
@@ -35,7 +26,7 @@ export default function Applicant({route, navigation}) {
           source={require('../../Images/applicant.png')}
         />
       </View>
-      <Text style={styles.title}>Welcome {name}</Text>
+      <Text style={styles.title}>Welcome {userData.Fname} </Text>
       {/*  */}
     </View>
   );

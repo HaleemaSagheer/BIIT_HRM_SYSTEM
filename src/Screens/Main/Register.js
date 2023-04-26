@@ -5,6 +5,7 @@ import {Button, TextInput} from 'react-native-paper';
 import {ScrollView} from 'react-native-gesture-handler';
 import {colors} from '../../color/Theme';
 import IP from '../../component/IP';
+import Input from '../../component/Input';
 import CheckBox from '@react-native-community/checkbox';
 
 export default function Register({navigation}) {
@@ -69,7 +70,7 @@ export default function Register({navigation}) {
           />
         </View>
         <Text style={styles.title}>Sign Up</Text>
-        <TextInput
+        {/* <TextInput
           label="FirstName"
           value={fname}
           mode={'outlined'}
@@ -78,8 +79,16 @@ export default function Register({navigation}) {
           }}
           left={<TextInput.Icon icon={'email-outline'} iconColor="#22C55E" />}
           style={styles.input}
+        /> */}
+        <Input
+          title="First Name"
+          placeholder={'Your First name'}
+          variant="simple"
+          value={fname}
+          setValue={setFname}
         />
-        <TextInput
+
+        {/* <TextInput
           label="LastName"
           value={lname}
           mode={'outlined'}
@@ -88,8 +97,15 @@ export default function Register({navigation}) {
           }}
           left={<TextInput.Icon icon={'email-outline'} iconColor="#22C55E" />}
           style={styles.input}
+        /> */}
+        <Input
+          title="Last Name"
+          placeholder={'Your Last name'}
+          variant="simple"
+          value={lname}
+          setValue={setLname}
         />
-        <TextInput
+        {/* <TextInput
           label="Email"
           value={email}
           mode={'outlined'}
@@ -98,9 +114,17 @@ export default function Register({navigation}) {
           }}
           left={<TextInput.Icon icon={'email-outline'} iconColor="#22C55E" />}
           style={styles.input}
+        /> */}
+        <Input
+          title="Email"
+          placeholder={'Your email address'}
+          variant="simple"
+          icon={'email-outline'}
+          value={email}
+          setValue={setEmail}
         />
         {/* Mobile Number */}
-        <TextInput
+        {/* <TextInput
           label="Mobile No"
           value={mobile}
           mode={'outlined'}
@@ -109,9 +133,16 @@ export default function Register({navigation}) {
           }}
           left={<TextInput.Icon icon={'email-outline'} iconColor="#22C55E" />}
           style={styles.input}
+        /> */}
+        <Input
+          title="Phone Number"
+          placeholder={'Phone Number'}
+          variant="simple"
+          value={mobile}
+          setValue={setMobile}
         />
         {/* //CNIC */}
-        <TextInput
+        {/* <TextInput
           label="CNIC"
           value={cnic}
           mode={'outlined'}
@@ -120,9 +151,16 @@ export default function Register({navigation}) {
           }}
           left={<TextInput.Icon icon={'email-outline'} iconColor="#22C55E" />}
           style={styles.input}
+        /> */}
+        <Input
+          title="CNIC"
+          placeholder="Enter your Cnic"
+          variant="simple"
+          value={cnic}
+          setValue={setCnic}
         />
         {/* //address */}
-        <TextInput
+        {/* <TextInput
           label="Address"
           value={address}
           mode={'outlined'}
@@ -131,8 +169,16 @@ export default function Register({navigation}) {
           }}
           left={<TextInput.Icon icon={'email-outline'} iconColor="#22C55E" />}
           style={styles.input}
+        /> */}
+        <Input
+          title="Location"
+          placeholder={'Location'}
+          variant="icon"
+          icon="location-pin"
+          value={address}
+          setValue={setAddress}
         />
-        <TextInput
+        {/* <TextInput
           label="Password"
           value={password}
           mode={'outlined'}
@@ -155,6 +201,24 @@ export default function Register({navigation}) {
           left={<TextInput.Icon icon={'key'} iconColor="#22C55E" />}
           right={<TextInput.Icon icon="eye" />}
           style={styles.input}
+        /> */}
+
+        <Input
+          title="Password"
+          placeholder={'Password'}
+          variant="passwordIcon"
+          icon="remove-red-eye"
+          value={password}
+          setValue={setPassword}
+        />
+        {/* Icon Input */}
+        <Input
+          title="Confirm Password"
+          placeholder={'Confirm Password'}
+          variant="passwordIcon"
+          icon="remove-red-eye"
+          value={confirmPassword}
+          setValue={setConfirmPassword}
         />
         <View style={styles.CheckStyle}>
           <View style={{flexDirection: 'row'}}>
@@ -163,7 +227,7 @@ export default function Register({navigation}) {
               value={isEducated}
               onValueChange={val => setIsEducated(val)}
             />
-            <Text style={{color: colors.dark}}>IsEducated</Text>
+            <Text style={{color: colors.dark}}>IsEducated?</Text>
           </View>
           <View style={{flexDirection: 'row'}}>
             <CheckBox
@@ -171,7 +235,7 @@ export default function Register({navigation}) {
               value={isExperienced}
               onValueChange={val => setIsExperienced(val)}
             />
-            <Text style={{color: colors.dark}}>IsExperienced</Text>
+            <Text style={{color: colors.dark}}>IsExperienced?</Text>
           </View>
         </View>
         <Button
@@ -195,6 +259,8 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.primary,
     flex: 1,
+    paddingHorizontal: 50,
+    paddingVertical: 50,
   },
   CheckStyle: {
     marginLeft: 10,

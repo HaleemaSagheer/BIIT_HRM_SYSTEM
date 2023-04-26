@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import {React, useEffect, useState} from 'react';
 import IP from '../../component/IP';
+import Input from '../../component/Input';
 
 import {Button, TextInput, Searchbar} from 'react-native-paper';
 import {Icon} from 'react-native-paper/lib/typescript/components/Avatar/Avatar';
@@ -29,27 +30,20 @@ export default function Login({navigation}) {
         },
       );
       console.log(response);
-      //console.log('response');
+
       const data = await response.json();
-      //console.log('Data');
-      console.log(data);
-      //console.log('before');
-      //console.log(data[0]);
-      console.log('Role');
-
-      console.log(data.role);
-      if (data.role == 'Applicant') {
-        navigation.navigate('ApplicantNavigator', {userData: data});
+      if (data.login.role == 'Applicant') {
+        navigation.navigate('ApplicantNavigator', {userData: data.login});
       }
-      if (data.role == 'Employee') {
-        navigation.navigate('EmployeeNavigator', {userData: data});
+      if (data.login.role == 'Employee') {
+        navigation.navigate('EmployeeNavigator', {userData: data.login});
       }
-      if (data.role == 'Guard') {
-        navigation.navigate('GuardNavigator', {userData: data});
+      if (data.login.role == 'Guard') {
+        navigation.navigate('GuardNavigator', {userData: data.login});
       }
 
-      if (data.role == 'HR') {
-        navigation.navigate('HrNavigator', {userData: data});
+      if (data.login.role == 'HR') {
+        navigation.navigate('HrNavigator', {userData: data.login});
       }
     } catch (err) {
       console.log(err);
@@ -70,8 +64,8 @@ export default function Login({navigation}) {
           source={require('../../Images/login.png')}
         />
       </View>
-      <Text style={styles.title}>Login</Text>
-      <TextInput
+      <Text style={styles.logintitle}>Login</Text>
+      {/* <TextInput
         style={styles.input}
         label="Email"
         value={email}
@@ -80,9 +74,25 @@ export default function Login({navigation}) {
           setEmail(val);
         }}
         left={<TextInput.Icon icon={'email-outline'} iconColor="#22C55E" />}
+      /> */}
+      <Input
+        title="Email"
+        placeholder={'Enter your password '}
+        variant="simple"
+        value={email}
+        setValue={setEmail}
+      />
+      {/* Password Input */}
+      <Input
+        title="Password"
+        placeholder={'************'}
+        variant="passwordIcon"
+        icon="remove-red-eye"
+        value={password}
+        setValue={setPassword}
       />
 
-      <TextInput
+      {/* <TextInput
         label="Password"
         value={password}
         mode={'outlined'}
@@ -93,7 +103,8 @@ export default function Login({navigation}) {
           setPassword(val);
         }}
         style={styles.input}
-      />
+      /> */}
+
       {/* BUTTON */}
       <Button mode="contained" style={styles.btn} onPress={loginHandler}>
         Login
@@ -119,6 +130,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.primary,
+    paddingHorizontal: 50,
+    paddingVertical: 50,
   },
   ImageView: {
     marginLeft: 110,
@@ -132,7 +145,7 @@ const styles = StyleSheet.create({
     borderWidth: 10,
     borderColor: colors.dark,
   },
-  title: {
+  logintitle: {
     fontSize: 25,
     fontWeight: '800',
     color: colors.dark,
@@ -165,5 +178,38 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     paddingLeft: 70,
     color: '#000',
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: '700',
+    color: colors.dark,
+    marginBottom: 30,
+  },
+  termsText: {
+    color: colors.dark,
+    fontSize: 14,
+  },
+  primaryText: {
+    color: colors.primary,
+    fontWeight: 'bold',
+  },
+  buttonContainer: {
+    marginVertical: 20,
+  },
+  termsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  bottomStripContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  primaryText: {
+    color: colors.primary,
+    fontWeight: 'bold',
+  },
+  lightText: {
+    color: colors.dark,
   },
 });

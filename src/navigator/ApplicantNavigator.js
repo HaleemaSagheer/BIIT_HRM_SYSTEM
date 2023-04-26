@@ -13,6 +13,7 @@ import Apply from '../Screens/Applicant/Apply';
 import Personal from '../Screens/Applicant/Personal';
 import Profile from '../Screens/Applicant/Profile';
 import CustomDrawer from '../component/CustomDrawer';
+import {colors} from '../color/Theme';
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -43,31 +44,62 @@ export default function ApplicantNavigator({route}) {
         initialParams={{userData}}
       />
       <Drawer.Screen
-        options={{drawerItemStyle: {height: 0}}}
+        options={{
+          drawerItemStyle: {height: 0},
+          headerShown: true,
+          headerBackground: () => (
+            <View style={{backgroundColor: colors.lighter, flex: 1}} />
+          ),
+        }}
         name="Personal"
         component={Personal}
         initialParams={{userData}}
       />
       <Drawer.Screen
-        options={{drawerItemStyle: {height: 0}}}
+        //options={{drawerItemStyle: {height: 0}}}
+        options={{
+          drawerItemStyle: {height: 0},
+          headerShown: true,
+          headerBackground: () => (
+            <View style={{backgroundColor: colors.lighter, flex: 1}} />
+          ),
+        }}
         name="Education"
         component={Education}
         initialParams={{userData}}
       />
       <Drawer.Screen
-        options={{drawerItemStyle: {height: 0}}}
+        options={{
+          drawerItemStyle: {height: 0},
+          headerShown: true,
+          headerBackground: () => (
+            <View style={{backgroundColor: colors.lighter, flex: 1}} />
+          ),
+        }}
         name="Experience"
         component={Experience}
         initialParams={{userData}}
       />
       <Drawer.Screen
-        options={{drawerItemStyle: {height: 0}}}
+        options={{
+          drawerItemStyle: {height: 0},
+          headerShown: true,
+          headerBackground: () => (
+            <View style={{backgroundColor: colors.lighter, flex: 1}} />
+          ),
+        }}
         name="JobDetails"
         component={JobDetails}
         initialParams={{userData}}
       />
       <Drawer.Screen
-        options={{drawerItemStyle: {height: 0}}}
+        options={{
+          drawerItemStyle: {height: 0},
+          headerShown: true,
+          headerBackground: () => (
+            <View style={{backgroundColor: colors.lighter, flex: 1}} />
+          ),
+        }}
         name="Apply"
         component={Apply}
         initialParams={{userData}}
