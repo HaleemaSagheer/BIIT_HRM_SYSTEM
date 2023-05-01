@@ -21,6 +21,7 @@ export default function Login({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const loginHandler = async () => {
+    //console.log('Entered');
     try {
       const response = await fetch(
         `http://${IP}/BIIT_HRM_System/api/User/Login?email=${email}&password=${password}`,
@@ -29,9 +30,10 @@ export default function Login({navigation}) {
           method: 'Post',
         },
       );
-      console.log(response);
 
       const data = await response.json();
+      console.log(response);
+      console.log(data.login.role);
       if (data.login.role == 'Applicant') {
         navigation.navigate('ApplicantNavigator', {userData: data.login});
       }

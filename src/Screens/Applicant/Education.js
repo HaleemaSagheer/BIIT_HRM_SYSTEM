@@ -3,38 +3,84 @@ import {Button, TextInput} from 'react-native-paper';
 import React, {useState} from 'react';
 import {colors} from '../../color/Theme';
 import Input from '../../component/Input';
+import IP from '../../component/IP';
 
-export default function Education() {
+export default function Education({route}) {
+  const {userData} = route.params;
   const [title, setTitle] = useState('');
   const [major, setMajor] = useState('');
   const [board, setBoard] = useState('');
-  const [passingYear, setPassingYear] = useState();
+  const [passingYear, setPassingYear] = useState(0);
   const [edudata, setEduData] = useState([]);
+  // console.log(userData.Uid);
 
   const renderEdu = ({item}) => (
     <View style={styles.card}>
-      <Text style={styles.txt}> Title:{item.title}</Text>
-      <Text style={styles.txt}>Major : {item.major}</Text>
-      <Text style={styles.txt}>Board : {item.board}</Text>
-      <Text style={styles.txt}>Passing Year : {item.passingYear}</Text>
+      <Text style={styles.txt}> Title:{item.Title}</Text>
+      <Text style={styles.txt}>Major : {item.Major}</Text>
+      <Text style={styles.txt}>Board : {item.Board}</Text>
+      <Text style={styles.txt}>Passing Year : {item.Year}</Text>
     </View>
   );
-  const handleSubmit = () => {};
+  const handleSubmit = async () => {
+    console.log('Entered');
+    try {
+      const response = await fetch(
+        `http://${IP}/BIIT_HRM_System/api/Applicant/AddEducation`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            educationData: edudata,
+            // applicantId: userData.Uid,
+          }),
+        },
+      );
+      //  To Check what i am sending in payLoad
+      console.log('Payload:', {
+        educationData: edudata,
+      });
+      const data = await response.json();
+      console.log('data', data);
+    } catch (error) {
+      console.log('ERROR REQUEST', error);
+    }
+  };
+
+  // const handleAddedu = () => {
+  //   setEduData([
+  //     ...edudata,
+  //     {
+  //       Title: title,
+  //       Major: major,
+  //       Board: board,
+  //       Year: passingYear, // Update to match server-side property name
+  //       ApplicantId: userData.Uid, // Update to match server-side property name
+  //       key: String(edudata.length),
+  //     },
+  //   ]);
+  //   setTitle('');
+  //   setMajor('');
+  //   setBoard('');
+  //   setPassingYear('');
+  // };
   const handleAddedu = () => {
     setEduData([
       ...edudata,
       {
-        title: title,
-        major: major,
-        board: board,
+        Title: title,
+        Major: major,
+        Board: board,
         Year: passingYear,
-        key: String(edudata.length),
+        ApplicantId: userData.Uid,
       },
     ]);
     setTitle('');
     setMajor('');
     setBoard('');
-    setPassingYear();
+    setPassingYear(0);
   };
 
   return (

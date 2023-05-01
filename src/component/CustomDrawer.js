@@ -8,7 +8,11 @@ import {colors} from '../color/Theme';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
+// const CustomDrawer = ({route, userData}) => {
+// const {screenData} = props; // Extract the relevant screen data prop
+// const {userData} = route.params;
 const CustomDrawer = props => {
+  const {screenData, userData} = props;
   return (
     <View style={styles.container}>
       <DrawerContentScrollView {...props}>
@@ -16,7 +20,10 @@ const CustomDrawer = props => {
           style={{padding: 20}}
           source={require('../Images/back2.png')}>
           <Image style={styles.Img} source={require('../Images/emp1.png')} />
-          <Text style={styles.txt}>cdbvsh</Text>
+          <Text style={styles.txt}>
+            {userData.Fname} {userData.Lname}
+          </Text>
+          {/* Wrap the screenData prop in a Text component */}
         </ImageBackground>
         <DrawerItemList {...props} />
       </DrawerContentScrollView>

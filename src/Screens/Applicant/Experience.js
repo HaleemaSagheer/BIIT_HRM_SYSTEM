@@ -11,7 +11,12 @@ export default function Experience() {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [currentlyWorking, setCurrentlyWorking] = useState(false);
-  const handleSubmit = () => {};
+  const handleSubmit = async () => {
+    try {
+    } catch (error) {
+      console.log('ERROR REQUEST', error);
+    }
+  };
   const handleAddExp = () => {
     setExpData([
       ...expdata,

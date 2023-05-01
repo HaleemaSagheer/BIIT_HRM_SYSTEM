@@ -20,12 +20,12 @@ const Stack = createNativeStackNavigator();
 export default function ApplicantNavigator({route}) {
   //ye route wahaa use hta jahaa py hum koi params recive krr rhy hty ye userData kahaa sy aye ga
   const {userData} = route.params;
-
+  //console.log(userData.Fname);
   return (
     <Drawer.Navigator
       initialRouteName="Applicant"
       screenOptions={{headerShown: true}}
-      drawerContent={props => <CustomDrawer {...props} />}>
+      drawerContent={props => <CustomDrawer {...props} userData={userData} />}>
       <Drawer.Screen
         name="Applicant"
         component={Applicant}

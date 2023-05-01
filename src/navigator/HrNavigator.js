@@ -17,7 +17,7 @@ const HrNavigator = ({route}) => {
     <Drawer.Navigator
       initialRouteName="HR"
       screenOptions={{headerShown: true}}
-      drawerContent={props => <CustomDrawer {...props} />}>
+      drawerContent={props => <CustomDrawer {...props} userData={userData} />}>
       <Drawer.Screen name="HR" component={HR} initialParams={{userData}} />
       <Drawer.Screen
         name="Job Post"

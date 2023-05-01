@@ -7,7 +7,6 @@ export default function Applicant({route, navigation}) {
   const userData = route.params;
   // console.log('Applicant');
   // console.log(userData.Fname);
-
   const onPressProfile = () => {
     navigation.navigate('Profile');
   };
