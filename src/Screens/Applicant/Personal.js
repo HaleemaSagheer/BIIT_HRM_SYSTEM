@@ -34,11 +34,12 @@ export default function Personal({route, navigation}) {
   const [gender, setGender] = useState(userData.gender);
   const [email, setEmail] = useState(userData.email);
   const [imageData, setImageData] = useState({
-    uri: `${imageData}/userData.Image`,
+    uri: `http://192.168.0.191/BIIT_HRM_System/Images/${userData.Image}`,
   });
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
 
+  console.log(`${JSON.stringify(userData)}/${userData.Image}`);
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
     setShow(false);
@@ -58,7 +59,7 @@ export default function Personal({route, navigation}) {
   };
   const saveHandler = async () => {
     try {
-      console.log('Entered');
+      //console.log('Entered');
       let data = new FormData();
       data.append('userId', userData.id);
       data.append('Fname', fname);

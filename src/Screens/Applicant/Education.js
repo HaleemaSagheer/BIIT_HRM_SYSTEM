@@ -25,6 +25,7 @@ export default function Education({route}) {
   const handleSubmit = async () => {
     console.log('Entered');
     try {
+      console.log(edudata);
       const response = await fetch(
         `http://${IP}/BIIT_HRM_System/api/Applicant/AddEducation`,
         {
@@ -32,10 +33,7 @@ export default function Education({route}) {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-            educationData: edudata,
-            // applicantId: userData.Uid,
-          }),
+          body: JSON.stringify(edudata),
         },
       );
       //  To Check what i am sending in payLoad
@@ -87,15 +85,6 @@ export default function Education({route}) {
     <View style={styles.container}>
       <Text style={styles.title}>Educational Infromation </Text>
       <View>
-        {/* <TextInput
-          label="Title"
-          value={title}
-          mode={'outlined'}
-          onChangeText={val => {
-            setTitle(val);
-          }}
-          style={styles.input}
-        /> */}
         <Input
           title="Title"
           placeholder={'Degree Title'}
@@ -104,11 +93,11 @@ export default function Education({route}) {
           setValue={setTitle}
         />
         {/* <TextInput
-          label="Major"
-          value={major}
+          label="Title"
+          value={title}
           mode={'outlined'}
           onChangeText={val => {
-            setMajor(val);
+            setTitle(val);
           }}
           style={styles.input}
         /> */}

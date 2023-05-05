@@ -18,13 +18,7 @@ const EmployeeNavigator = ({route}) => {
     <Drawer.Navigator
       initialRouteName="Employee"
       screenOptions={{headerShown: true}}
-      drawerContent={props => (
-        <CustomDrawer
-          {...props}
-          userData={userData.Fname}
-          initialParams={userData}
-        />
-      )}>
+      drawerContent={props => <CustomDrawer {...props} userData={userData} />}>
       <Drawer.Screen
         name="Employee"
         component={Employee}

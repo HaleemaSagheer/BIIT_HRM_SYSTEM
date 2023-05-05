@@ -3,95 +3,147 @@ import {Button, TextInput} from 'react-native-paper';
 import React, {useState} from 'react';
 import {colors} from '../../color/Theme';
 import CheckBox from '@react-native-community/checkbox';
+import Input from '../../component/Input';
 
-export default function Experience() {
+export default function Experience({route}) {
+  const userData = route.params;
   const [expdata, setExpData] = useState([]);
   const [company, setCompany] = useState('');
   const [title, setTitle] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [currentlyWorking, setCurrentlyWorking] = useState(false);
+  const [hasExperience, setHasExperience] = useState(false);
+  const [isFresher, setIsFresher] = useState(false);
+
   const handleSubmit = async () => {
     try {
+      if (isFresher) {
+        // Handle submission for fresher
+        console.log('Submit as Fresher');
+      } else {
+        // Handle submission for experienced user
+        console.log('Submit with Experience');
+        console.log(expdata);
+      }
     } catch (error) {
       console.log('ERROR REQUEST', error);
     }
   };
+
   const handleAddExp = () => {
     setExpData([
       ...expdata,
       {
         title: title,
         company: company,
-        duration: duration,
+        startDate: startDate,
+        endDate: endDate,
+        currentlyWorking: currentlyWorking,
+        ApplicantId: userData.Uid,
         key: String(expdata.length),
       },
     ]);
+
+    // Reset input fields
     setTitle('');
     setCompany('');
-    setDuration('');
+    setStartDate('');
+    setEndDate('');
     setCurrentlyWorking(false);
   };
+
   const renderExp = ({item}) => (
     <View style={styles.card}>
-      <Text> Title:{item.title}</Text>
-      <Text>Company:{item.company}</Text>
-      <Text>Duration:{item.duration}</Text>
+      <Text> Title: {item.title}</Text>
+      <Text> Company: {item.company}</Text>
+      <Text> Starting Date: {item.startDate}</Text>
+      <Text> Ending Date: {item.endDate}</Text>
+      <Text> Still Working: {item.currentlyWorking}</Text>
     </View>
   );
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Experience </Text>
-      <View>
-        <TextInput
-          label="Title of job"
-          value={title}
-          mode={'outlined'}
-          onChangeText={val => {
-            setTitle(val);
+
+      <View
+        style={{flexDirection: 'row', alignItems: 'center', marginBottom: 10}}>
+        <CheckBox
+          style={styles.CheckStyle}
+          value={hasExperience}
+          onValueChange={val => {
+            setHasExperience(val);
+            setIsFresher(false);
           }}
-          style={styles.input}
         />
-        <TextInput
-          label="Company"
-          value={company}
-          mode={'outlined'}
-          onChangeText={val => {
-            setCompany(val);
-          }}
-          style={styles.input}
-        />
-        <TextInput
-          label="Starting Date"
-          value={startDate}
-          mode={'outlined'}
-          onChangeText={val => {
-            setStartDate(val);
-          }}
-          style={styles.input}
-        />
-        <TextInput
-          label="Ending Date"
-          value={endDate}
-          mode={'outlined'}
-          onChangeText={val => {
-            setEndDate(val);
-          }}
-          style={styles.input}
-        />
-        <View style={{flexDirection: 'row'}}>
-          <CheckBox
-            style={styles.CheckStyle}
-            value={currentlyWorking}
-            onValueChange={val => setCurrentlyWorking(val)}
-          />
-          <Text style={{color: colors.dark}}>Still Working?</Text>
-        </View>
-        <Button mode="contained" style={styles.btn} onPress={handleAddExp}>
-          Add
-        </Button>
+        <Text style={{color: colors.dark}}>Have Experience?</Text>
       </View>
-      <FlatList data={expdata} renderItem={renderExp} />
+
+      <View
+        style={{flexDirection: 'row', alignItems: 'center', marginBottom: 10}}>
+        <CheckBox
+          style={styles.CheckStyle}
+          value={isFresher}
+          onValueChange={val => {
+            setIsFresher(val);
+            setHasExperience(false);
+          }}
+        />
+        <Text style={{color: colors.dark}}>Fresher</Text>
+      </View>
+
+      {hasExperience && (
+        <View>
+          <Input
+            title="Job"
+            placeholder="Title of job"
+            variant="simple"
+            value={title}
+            setValue={setTitle}
+          />
+          <Input
+            title="Company"
+            placeholder="Company Name"
+            variant="simple"
+            value={company}
+            setValue={setCompany}
+          />
+          <Input
+            title="Starting Date"
+            placeholder="Starting Date"
+            variant="simple"
+            value={startDate}
+            setValue={setStartDate}
+          />
+          <Input
+            title="Ending Date"
+            placeholder="Ending Date"
+            variant="simple"
+            value={endDate}
+            setValue={setEndDate}
+          />
+          <View style={{flexDirection: 'row'}}>
+            <CheckBox
+              style={styles.CheckStyle}
+              value={currentlyWorking}
+              onValueChange={val => setCurrentlyWorking(val)}
+            />
+            <Text style={{color: colors.dark}}>Still Working?</Text>
+          </View>
+          <Button mode="contained" style={styles.btn} onPress={handleAddExp}>
+            Add
+          </Button>
+          {expdata.length > 0 ? (
+            <FlatList data={expdata} renderItem={renderExp} />
+          ) : (
+            <Text>No experience added yet.</Text>
+          )}
+        </View>
+      )}
+
+      {!hasExperience && <Text>Being a fresher is absolutely fine!</Text>}
+
       <Button mode="contained" style={styles.btn} onPress={handleSubmit}>
         Submit
       </Button>
@@ -103,17 +155,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.primary,
+    paddingHorizontal: 40,
+    paddingVertical: 40,
   },
   CheckStyle: {
     marginLeft: 10,
     color: colors.dark,
   },
   title: {
-    marginTop: 10,
-
+    marginBottom: 5,
     fontSize: 25,
     fontWeight: '800',
-    color: colors.dark,
+    color: colors.black,
     alignSelf: 'flex-start',
   },
   card: {

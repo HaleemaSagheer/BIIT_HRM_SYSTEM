@@ -1,54 +1,68 @@
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {colors} from '../../color/Theme';
+import emp1 from '../../Images/emp1.png';
 
 export default function Guard({navigation}) {
-  const PressHandler = () => {
-    navigation.navigate('MarkAttendance');
+  const [employees, setEmployees] = useState([
+    {id: 1, name: 'John Doe', timeEntries: [], clicked: false},
+    {id: 2, name: 'Jane Smith', timeEntries: [], clicked: false},
+    // Add more employees as needed
+  ]);
+
+  const handleEmployeePress = employeeId => {
+    setEmployees(prevEmployees => {
+      return prevEmployees.map(employee => {
+        if (employee.id === employeeId) {
+          const currentTime = new Date();
+          if (
+            employee.timeEntries.length > 0 &&
+            !employee.timeEntries[employee.timeEntries.length - 1].timeOut
+          ) {
+            // Last entry is a time-in, record time-out
+            employee.timeEntries[employee.timeEntries.length - 1].timeOut =
+              currentTime;
+          } else {
+            // Record time-in
+            employee.timeEntries.push({timeIn: currentTime, timeOut: null});
+          }
+          employee.clicked = !employee.clicked; // Toggle clicked state
+        }
+        return employee;
+      });
+    });
   };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}> Guard Side </Text>
-      <View style={{flexDirection: 'row', paddingTop: 20}}>
-        <View style={styles.imgView}>
-          <Image
-            style={styles.employeeImage}
-            source={require('../Images/emp2.png')}
-          />
-          <TouchableOpacity onPress={PressHandler} style={styles.btnView}>
-            <Text style={styles.employeeName}> Mr.Ahsan </Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.imgView}>
-          <Image
-            style={styles.employeeImage}
-            source={require('../Images/emp1.png')}
-          />
-          <TouchableOpacity onPress={PressHandler} style={styles.btnView}>
-            <Text style={styles.employeeName}> Ms.Noor </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      <View style={{flexDirection: 'row', paddingTop: 20}}>
-        <View style={styles.imgView}>
-          <Image
-            style={styles.employeeImage}
-            source={require('../Images/image3.png')}
-          />
-          <TouchableOpacity onPress={PressHandler} style={styles.btnView}>
-            <Text style={styles.employeeName}> Ms.Nadia </Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.imgView}>
-          <Image
-            style={styles.employeeImage}
-            source={require('../Images/emp4.png')}
-          />
-          <TouchableOpacity onPress={PressHandler} style={styles.btnView}>
-            <Text style={styles.employeeName}> Mr.Hassan </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      <Text style={styles.title}>Guard Side</Text>
+      {employees.map(employee => (
+        <TouchableOpacity
+          key={employee.id}
+          style={[
+            styles.employeeContainer,
+            {backgroundColor: employee.clicked ? 'green' : 'red'},
+          ]}
+          onPress={() => handleEmployeePress(employee.id)}>
+          <Image source={emp1} style={styles.employeeImage} />
+          <Text style={styles.employeeName}>{employee.name}</Text>
+          {employee.timeEntries.map((entry, index) => (
+            <View key={index}>
+              <Text style={styles.timeEntry}>
+                Time In: {entry.timeIn.toString()}
+              </Text>
+              {entry.timeOut && (
+                <Text style={styles.timeEntry}>
+                  Time Out: {entry.timeOut.toString()}
+                </Text>
+              )}
+            </View>
+          ))}
+          {employee.timeEntries.length === 0 && (
+            <Text>No time entries yet.</Text>
+          )}
+        </TouchableOpacity>
+      ))}
     </View>
   );
 }
@@ -57,6 +71,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.primary,
+    alignItems: 'center',
   },
   title: {
     padding: 10,
@@ -68,32 +83,24 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     alignSelf: 'center',
   },
+  employeeContainer: {
+    alignItems: 'center',
+    marginVertical: 10,
+    padding: 10,
+    borderRadius: 10,
+  },
   employeeImage: {
     width: 150,
     height: 150,
-    borderRadius: 50,
+    borderRadius: 75,
     marginVertical: 10,
   },
   employeeName: {
     color: colors.secondary,
     fontWeight: 'bold',
-    marginLeft: 20,
+    marginTop: 10,
   },
-  imgView: {
-    marginLeft: 30,
-  },
-  btnView: {
-    elevation: 10,
-    height: 40,
-    width: 150,
-    justifyContent: 'center',
-    alignContent: 'center',
-    alignSelf: 'center',
-    backgroundColor: colors.dark,
-    borderRadius: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-    margin: 10,
-    marginLeft: 10,
+  timeEntry: {
+    marginTop: 5,
   },
 });

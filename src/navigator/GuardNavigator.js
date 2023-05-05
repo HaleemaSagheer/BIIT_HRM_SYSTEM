@@ -1,11 +1,47 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-
-export default function GuardNavigator() {
+import CustomDrawer from '../component/CustomDrawer';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import Guard from '../Screens/Guard/Guard';
+import MarkAttendance from '../Screens/Guard/MarkAttendance';
+const Drawer = createDrawerNavigator();
+export default function GuardNavigator({route}) {
+  const {userData} = route.params;
   return (
-    <View>
-      <Text>GuardNavigator</Text>
-    </View>
+    <Drawer.Navigator
+      initialRouteName="Applicant"
+      screenOptions={{headerShown: true}}
+      drawerContent={props => <CustomDrawer {...props} userData={userData} />}>
+      <Drawer.Screen name="Guard" component={Guard} initialParams={userData} />
+
+      <Drawer.Screen
+        name="MarkAttendance"
+        component={MarkAttendance}
+        initialParams={{userData}}
+      />
+      {/* <Drawer.Screen
+        name="Profile"
+        component={Profile}
+        initialParams={{userData}}
+      />
+      <Drawer.Screen
+        name="Applications"
+        component={Applications}
+        initialParams={{userData}}
+      />
+      <Drawer.Screen
+        options={{
+          drawerItemStyle: {height: 0},
+          headerShown: true,
+          headerBackground: () => (
+            <View style={{backgroundColor: colors.lighter, flex: 1}} />
+          ),
+        }}
+        name="Personal"
+        component={Personal}
+        initialParams={{userData}}
+      /> */}
+    </Drawer.Navigator>
   );
 }
 
