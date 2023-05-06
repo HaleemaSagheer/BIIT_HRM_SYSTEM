@@ -235,7 +235,7 @@ export default function Register({navigation}) {
               value={isExperienced}
               onValueChange={val => setIsExperienced(val)}
             />
-            <Text style={{color: colors.dark}}>IsExperienced?</Text>
+            <Text style={{color: colors.dark}}>hasExperience?</Text>
           </View>
         </View>
         <Button

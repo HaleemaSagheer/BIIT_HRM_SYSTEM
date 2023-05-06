@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, FlatList} from 'react-native';
+import {StyleSheet, Text, View, FlatList, ScrollView} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 import React, {useState} from 'react';
 import {colors} from '../../color/Theme';
@@ -8,7 +8,7 @@ import Input from '../../component/Input';
 export default function Experience({route}) {
   const userData = route.params;
   const [expdata, setExpData] = useState([]);
-  const [company, setCompany] = useState('');
+  const [organization, setOrganization] = useState('');
   const [title, setTitle] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
@@ -35,11 +35,11 @@ export default function Experience({route}) {
     setExpData([
       ...expdata,
       {
-        title: title,
-        company: company,
-        startDate: startDate,
-        endDate: endDate,
-        currentlyWorking: currentlyWorking,
+        JobTitle: title,
+        Organization: organization,
+        StartDate: startDate,
+        EndDate: endDate,
+        CurrentlyWorking: currentlyWorking,
         ApplicantId: userData.Uid,
         key: String(expdata.length),
       },
@@ -47,7 +47,7 @@ export default function Experience({route}) {
 
     // Reset input fields
     setTitle('');
-    setCompany('');
+    setOrganization('');
     setStartDate('');
     setEndDate('');
     setCurrentlyWorking(false);
@@ -56,10 +56,17 @@ export default function Experience({route}) {
   const renderExp = ({item}) => (
     <View style={styles.card}>
       <Text> Title: {item.title}</Text>
-      <Text> Company: {item.company}</Text>
+      <Text> Company: {item.organization}</Text>
       <Text> Starting Date: {item.startDate}</Text>
       <Text> Ending Date: {item.endDate}</Text>
-      <Text> Still Working: {item.currentlyWorking}</Text>
+      {/* if the currentlyWorking property is true, it indicates that the 
+      item is still ongoing and there is no end date specified. If it is false, 
+      it means that the item has ended and the endDate property contains the date when it ended. */}
+      {item.currentlyWorking ? (
+        <Text> Currently Working</Text>
+      ) : (
+        <Text> Ending Date: {item.endDate}</Text>
+      )}
     </View>
   );
 
@@ -106,8 +113,8 @@ export default function Experience({route}) {
             title="Company"
             placeholder="Company Name"
             variant="simple"
-            value={company}
-            setValue={setCompany}
+            value={organization}
+            setValue={setOrganization}
           />
           <Input
             title="Starting Date"
@@ -115,13 +122,6 @@ export default function Experience({route}) {
             variant="simple"
             value={startDate}
             setValue={setStartDate}
-          />
-          <Input
-            title="Ending Date"
-            placeholder="Ending Date"
-            variant="simple"
-            value={endDate}
-            setValue={setEndDate}
           />
           <View style={{flexDirection: 'row'}}>
             <CheckBox
@@ -131,14 +131,30 @@ export default function Experience({route}) {
             />
             <Text style={{color: colors.dark}}>Still Working?</Text>
           </View>
+          <Input
+            title="Ending Date"
+            placeholder="Ending Date"
+            variant="simple"
+            value={endDate}
+            setValue={setEndDate}
+          />
           <Button mode="contained" style={styles.btn} onPress={handleAddExp}>
             Add
           </Button>
-          {expdata.length > 0 ? (
-            <FlatList data={expdata} renderItem={renderExp} />
-          ) : (
-            <Text>No experience added yet.</Text>
-          )}
+          <View>
+            {/* This checks whether there are any items in the expdata array.
+             If there are, the FlatList will be rendered. If not, a simple text
+             message saying "No experience added yet." will be rendered instead. */}
+            {expdata.length > 0 ? (
+              <FlatList
+                data={expdata}
+                renderItem={renderExp}
+                keyExtractor={(item, index) => index.toString()}
+              />
+            ) : (
+              <Text>No experience added yet.</Text>
+            )}
+          </View>
         </View>
       )}
 
