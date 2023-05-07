@@ -70,7 +70,8 @@ export default function Register({navigation}) {
           />
         </View>
         <Text style={styles.title}>Sign Up</Text>
-        {/* <TextInput
+        <View style={{padding:20}}>
+        <TextInput
           label="FirstName"
           value={fname}
           mode={'outlined'}
@@ -79,16 +80,16 @@ export default function Register({navigation}) {
           }}
           left={<TextInput.Icon icon={'email-outline'} iconColor="#22C55E" />}
           style={styles.input}
-        /> */}
-        <Input
+        />
+        {/* <Input
           title="First Name"
           placeholder={'Your First name'}
           variant="simple"
           value={fname}
           setValue={setFname}
-        />
+        /> */}
 
-        {/* <TextInput
+        <TextInput
           label="LastName"
           value={lname}
           mode={'outlined'}
@@ -97,15 +98,15 @@ export default function Register({navigation}) {
           }}
           left={<TextInput.Icon icon={'email-outline'} iconColor="#22C55E" />}
           style={styles.input}
-        /> */}
-        <Input
+        />
+        {/* <Input
           title="Last Name"
           placeholder={'Your Last name'}
           variant="simple"
           value={lname}
           setValue={setLname}
-        />
-        {/* <TextInput
+        /> */}
+        <TextInput
           label="Email"
           value={email}
           mode={'outlined'}
@@ -114,17 +115,17 @@ export default function Register({navigation}) {
           }}
           left={<TextInput.Icon icon={'email-outline'} iconColor="#22C55E" />}
           style={styles.input}
-        /> */}
-        <Input
+        />
+        {/* <Input
           title="Email"
           placeholder={'Your email address'}
           variant="simple"
           icon={'email-outline'}
           value={email}
           setValue={setEmail}
-        />
+        /> */}
         {/* Mobile Number */}
-        {/* <TextInput
+        <TextInput
           label="Mobile No"
           value={mobile}
           mode={'outlined'}
@@ -133,16 +134,16 @@ export default function Register({navigation}) {
           }}
           left={<TextInput.Icon icon={'email-outline'} iconColor="#22C55E" />}
           style={styles.input}
-        /> */}
-        <Input
+        />
+        {/* <Input
           title="Phone Number"
           placeholder={'Phone Number'}
           variant="simple"
           value={mobile}
           setValue={setMobile}
-        />
+        /> */}
         {/* //CNIC */}
-        {/* <TextInput
+        <TextInput
           label="CNIC"
           value={cnic}
           mode={'outlined'}
@@ -151,16 +152,16 @@ export default function Register({navigation}) {
           }}
           left={<TextInput.Icon icon={'email-outline'} iconColor="#22C55E" />}
           style={styles.input}
-        /> */}
-        <Input
+        />
+        {/* <Input
           title="CNIC"
           placeholder="Enter your Cnic"
           variant="simple"
           value={cnic}
           setValue={setCnic}
-        />
+        /> */}
         {/* //address */}
-        {/* <TextInput
+        <TextInput
           label="Address"
           value={address}
           mode={'outlined'}
@@ -169,16 +170,16 @@ export default function Register({navigation}) {
           }}
           left={<TextInput.Icon icon={'email-outline'} iconColor="#22C55E" />}
           style={styles.input}
-        /> */}
-        <Input
+        />
+        {/* <Input
           title="Location"
           placeholder={'Location'}
           variant="icon"
           icon="location-pin"
           value={address}
           setValue={setAddress}
-        />
-        {/* <TextInput
+        /> */}
+        <TextInput
           label="Password"
           value={password}
           mode={'outlined'}
@@ -201,27 +202,28 @@ export default function Register({navigation}) {
           left={<TextInput.Icon icon={'key'} iconColor="#22C55E" />}
           right={<TextInput.Icon icon="eye" />}
           style={styles.input}
-        /> */}
+        />
 
-        <Input
+        {/* <Input
           title="Password"
           placeholder={'Password'}
           variant="passwordIcon"
           icon="remove-red-eye"
           value={password}
           setValue={setPassword}
-        />
+        /> */}
         {/* Icon Input */}
-        <Input
+        {/* <Input
           title="Confirm Password"
           placeholder={'Confirm Password'}
           variant="passwordIcon"
           icon="remove-red-eye"
           value={confirmPassword}
           setValue={setConfirmPassword}
-        />
+        /> */}
+        </View>
         <View style={styles.CheckStyle}>
-          <View style={{flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row', alignItems:"center"}}>
             <CheckBox
               style={styles.CheckStyle}
               value={isEducated}
@@ -229,7 +231,7 @@ export default function Register({navigation}) {
             />
             <Text style={{color: colors.dark}}>IsEducated?</Text>
           </View>
-          <View style={{flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row',  alignItems:"center"}}>
             <CheckBox
               style={styles.CheckStyle}
               value={isExperienced}
@@ -238,14 +240,19 @@ export default function Register({navigation}) {
             <Text style={{color: colors.dark}}>IsExperienced?</Text>
           </View>
         </View>
-        <Button
+        <View style={{padding:20, justifyContent:"center",alignItems:"center"}}>
+        <TouchableOpacity style={styles.registerbtn} onPress={handleRegister}>
+          <Text style={{color:colors.white, fontWeight:"800", fontSize:22}}>Register</Text>
+        </TouchableOpacity>
+        </View>
+        {/* <Button
           style={styles.registerbtn}
           mode="contained"
           onPress={handleRegister}>
           Register
-        </Button>
-        <View style={{flexDirection: 'row', padding: 50}}>
-          <Text style={{color: '#000'}}>Already Have an account ?</Text>
+        </Button> */}
+        <View style={{flexDirection: 'row', justifyContent:"center",margin:15}}>
+          <Text style={{color: '#000',fontSize: 16,}}>Already Have an account ? </Text>
           <TouchableOpacity onPress={handleLogin}>
             <Text style={styles.txtbtn}>Login Here</Text>
           </TouchableOpacity>
@@ -259,16 +266,16 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.primary,
     flex: 1,
-    paddingHorizontal: 50,
-    paddingVertical: 50,
+    
   },
   CheckStyle: {
     marginLeft: 10,
     color: colors.dark,
   },
   ImageView: {
-    marginLeft: 110,
-    paddingTop: 10,
+    justifyContent:"center",
+    alignItems:"center",
+    marginTop:30,
   },
   Image: {
     height: 200,
@@ -291,9 +298,14 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
   registerbtn: {
+    height:50,
+    borderRadius:20,
     width: '50%',
-    marginTop: 15,
-    alignSelf: 'center',
+ 
+    // marginTop: 15,
+    // alignSelf: 'center',
+    justifyContent:"center",
+    alignItems:"center",
     backgroundColor: colors.dark,
   },
   inputdropdown: {
@@ -315,11 +327,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   input: {
-    marginLeft: 20,
-    marginTop: 20,
-    height: 50,
-    width: '90%',
-    borderRadius: 5,
-    alignSelf: 'center',
+    
+    width: '100%',
+    borderRadius: 20,
+    justifyContent:"center",
+    marginBottom:10,
   },
 });
