@@ -6,17 +6,17 @@ import {
   TouchableOpacity,
   ToastAndroid,
 } from 'react-native';
-import {React, useEffect, useState} from 'react';
+import { React, useEffect, useState } from 'react';
 import IP from '../../component/IP';
 import Input from '../../component/Input';
 
-import {Button, TextInput, Searchbar} from 'react-native-paper';
-import {Icon} from 'react-native-paper/lib/typescript/components/Avatar/Avatar';
-import {Entypo} from 'react-native-vector-icons/Entypo';
-import {colors} from '../../color/Theme';
+import { Button, TextInput, Searchbar } from 'react-native-paper';
+import { Icon } from 'react-native-paper/lib/typescript/components/Avatar/Avatar';
+import { Entypo } from 'react-native-vector-icons/Entypo';
+import { colors } from '../../color/Theme';
 //import {con} from '../src/component/Ip';
 
-export default function Login({navigation}) {
+export default function Login({ navigation }) {
   //const IP = con.Ip.IP;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -35,17 +35,17 @@ export default function Login({navigation}) {
       console.log(response);
       console.log(data.login.role);
       if (data.login.role == 'Applicant') {
-        navigation.navigate('ApplicantNavigator', {userData: data.login});
+        navigation.navigate('ApplicantNavigator', { userData: data.login });
       }
       if (data.login.role == 'Employee') {
-        navigation.navigate('EmployeeNavigator', {userData: data.login});
+        navigation.navigate('EmployeeNavigator', { userData: data.login });
       }
       if (data.login.role == 'Guard') {
-        navigation.navigate('GuardNavigator', {userData: data.login});
+        navigation.navigate('GuardNavigator', { userData: data.login });
       }
 
       if (data.login.role == 'HR') {
-        navigation.navigate('HrNavigator', {userData: data.login});
+        navigation.navigate('HrNavigator', { userData: data.login });
       }
     } catch (err) {
       console.log(err);
@@ -67,63 +67,79 @@ export default function Login({navigation}) {
         />
       </View>
       <Text style={styles.logintitle}>Login</Text>
-      {/* <TextInput
-        style={styles.input}
-        label="Email"
-        value={email}
-        mode={'outlined'}
-        onChangeText={val => {
-          setEmail(val);
-        }}
-        left={<TextInput.Icon icon={'email-outline'} iconColor="#22C55E" />}
-      /> */}
-      <Input
+      <View style={{ padding: 20, }}>
+        <TextInput
+          style={styles.input}
+          label="Email"
+          value={email}
+          mode={'outlined'}
+          onChangeText={val => {
+            setEmail(val);
+          }}
+          left={<TextInput.Icon icon={'email-outline'} iconColor="#22C55E" />}
+        />
+
+        {/* <Input
+    
+
         title="Email"
         placeholder={'Enter your password '}
         variant="simple"
         value={email}
         setValue={setEmail}
-      />
-      {/* Password Input */}
-      <Input
+      /> */}
+        {/* Password Input */}
+        {/* <Input
         title="Password"
         placeholder={'************'}
         variant="passwordIcon"
         icon="remove-red-eye"
         value={password}
         setValue={setPassword}
-      />
-
-      {/* <TextInput
-        label="Password"
-        value={password}
-        mode={'outlined'}
-        secureTextEntry={true}
-        left={<TextInput.Icon icon={'key'} iconColor="#22C55E" />}
-        right={<TextInput.Icon icon="eye" />}
-        onChangeText={val => {
-          setPassword(val);
-        }}
-        style={styles.input}
       /> */}
 
+        <TextInput
+          label="Password"
+          value={password}
+          mode={'outlined'}
+          secureTextEntry={true}
+          left={<TextInput.Icon icon={'key'} iconColor="#22C55E" />}
+          right={<TextInput.Icon icon="eye" />}
+          onChangeText={val => {
+            setPassword(val);
+          }}
+          style={styles.input}
+        />
+        <View style={{ alignItems: "flex-end", marginTop: 10, }}>
+          <TouchableOpacity onPress={handleForgotPassword}>
+            <Text style={{ fontWeight: 'bold', color: '#000' }}>
+              Forgot Password?
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View style={{ alignItems: "center" }}>
+          <TouchableOpacity onPress={loginHandler} style={styles.btn}>
+            <Text style={{ color: colors.white, fontWeight: "800", fontSize: 22 }}>Login</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+
+
       {/* BUTTON */}
-      <Button mode="contained" style={styles.btn} onPress={loginHandler}>
-        Login
-      </Button>
+
       <View style={styles.InnerView}>
-        <Text style={{color: '#000'}}>Don't have an account ? </Text>
+        <Text style={{ color: '#000', fontSize: 16, }}>Don't have an account ? </Text>
         <TouchableOpacity onPress={handleRegister}>
           <Text style={styles.txtbtn}>Register</Text>
         </TouchableOpacity>
       </View>
-      <View style={{paddingTop: 10}}>
+      {/* <View style={{paddingTop: 10}}>
         <TouchableOpacity onPress={handleForgotPassword}>
           <Text style={{marginLeft: '60%', fontWeight: 'bold', color: '#000'}}>
             Forgot Password?
           </Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </View>
   );
 }
@@ -132,13 +148,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.primary,
-    paddingHorizontal: 50,
-    paddingVertical: 50,
+    // paddingHorizontal: 50,
+    // paddingVertical: 50,
   },
   ImageView: {
-    marginLeft: 110,
-    paddingTop: 20,
-    paddingBottom: 30,
+
+    marginTop: 50,
+
+    justifyContent: "center",
+    alignItems: "center"
+
   },
   Image: {
     height: 200,
@@ -148,6 +167,7 @@ const styles = StyleSheet.create({
     borderColor: colors.dark,
   },
   logintitle: {
+    marginTop: 20,
     fontSize: 25,
     fontWeight: '800',
     color: colors.dark,
@@ -155,19 +175,20 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   input: {
-    marginLeft: 20,
-    marginTop: 30,
-    height: 50,
-    width: '90%',
-    borderRadius: 10,
-    alignSelf: 'center',
+    width: '100%',
+    borderRadius: 20,
+    justifyContent: "center",
+    marginBottom: 10,
+
   },
   btn: {
     backgroundColor: colors.dark,
-    marginTop: 30,
+    marginTop: 20,
     height: 50,
     width: '50%',
-    alignSelf: 'center',
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
     fontWeight: '800',
   },
   txtbtn: {
@@ -177,8 +198,7 @@ const styles = StyleSheet.create({
   },
   InnerView: {
     flexDirection: 'row',
-    paddingTop: 50,
-    paddingLeft: 70,
+    justifyContent: "center",
     color: '#000',
   },
   title: {
