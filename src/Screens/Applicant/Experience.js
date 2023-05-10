@@ -152,13 +152,17 @@ export default function Experience({route}) {
                 keyExtractor={(item, index) => index.toString()}
               />
             ) : (
-              <Text>No experience added yet.</Text>
+              <Text style={{color: colors.dark}}>No experience added yet.</Text>
             )}
           </View>
         </View>
       )}
 
-      {!hasExperience && <Text>Being a fresher is absolutely fine!</Text>}
+      {!hasExperience && (
+        <Text style={{color: colors.dark}}>
+          Being a fresher is absolutely fine!
+        </Text>
+      )}
 
       <Button mode="contained" style={styles.btn} onPress={handleSubmit}>
         Submit

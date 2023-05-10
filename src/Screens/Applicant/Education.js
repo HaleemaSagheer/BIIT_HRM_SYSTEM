@@ -47,23 +47,6 @@ export default function Education({route}) {
     }
   };
 
-  // const handleAddedu = () => {
-  //   setEduData([
-  //     ...edudata,
-  //     {
-  //       Title: title,
-  //       Major: major,
-  //       Board: board,
-  //       Year: passingYear, // Update to match server-side property name
-  //       ApplicantId: userData.Uid, // Update to match server-side property name
-  //       key: String(edudata.length),
-  //     },
-  //   ]);
-  //   setTitle('');
-  //   setMajor('');
-  //   setBoard('');
-  //   setPassingYear('');
-  // };
   const handleAddedu = () => {
     setEduData([
       ...edudata,
