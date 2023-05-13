@@ -277,12 +277,11 @@ export default function Personal({route, navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 40,
-    paddingVertical: 40,
+    padding:20,
     backgroundColor: colors.primary,
   },
   title: {
-    marginTop: 10,
+ 
     marginBottom: 10,
     fontSize: 20,
     fontWeight: '700',

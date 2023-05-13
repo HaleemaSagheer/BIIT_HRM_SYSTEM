@@ -20,7 +20,10 @@ export default function Employee({route, navigation}) {
       <View style={styles.ImageView}>
         <Image style={styles.Image} source={require('../../Images/logo.png')} />
       </View>
-      <Text style={styles.title}>welcome {userData.Fname}</Text>
+      {/* <Text style={styles.title}>welcome {userData.Fname}</Text> */}
+      <View style={{alignItems:"center", width:"100%" }}>
+      <Text style={styles.title}>Welcome{"  "}{userData.Fname}</Text>
+      </View>
     </View>
   );
 }
@@ -35,14 +38,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    padding: 10,
     fontWeight: 'bold',
     fontSize: 25,
-    paddingBottom: 30,
-    color: colors.dark,
+    color: "black",
     marginTop: 10,
     marginBottom: 10,
-    alignSelf: 'center',
   },
   btnView: {
     elevation: 10,
@@ -62,9 +62,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   ImageView: {
-    marginLeft: 110,
-    paddingTop: 20,
-    paddingBottom: 30,
+   justifyContent:"center",
+   alignItems:"center",
+   marginTop:20,
+   marginBottom:20,
   },
   Image: {
     height: 200,

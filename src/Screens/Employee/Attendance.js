@@ -19,7 +19,9 @@ export default function Attendance() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Attendance</Text>
-      <MyTable tableHead={tableHead} tableData={tableData} />
+      <MyTable
+      
+      tableHead={tableHead} tableData={tableData} />
     </View>
   );
 }
@@ -33,10 +35,10 @@ const styles = StyleSheet.create({
     padding: 10,
     fontWeight: 'bold',
     fontSize: 25,
-    paddingBottom: 30,
+
     color: colors.dark,
     marginTop: 10,
-    marginBottom: 10,
+  
     alignSelf: 'center',
   },
 });

@@ -1,9 +1,9 @@
-import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
-import {colors} from '../../color/Theme';
+import { colors } from '../../color/Theme';
 // import {TouchableOpacity} from 'react-native-gesture-handler';
 
-export default function Applicant({route, navigation}) {
+export default function Applicant({ route, navigation }) {
   const userData = route.params;
   // console.log('Applicant');
   // console.log(userData.Fname);
@@ -25,7 +25,9 @@ export default function Applicant({route, navigation}) {
           source={require('../../Images/applicant.png')}
         />
       </View>
-      <Text style={styles.title}>Welcome {userData.Fname} </Text>
+      <View style={{alignItems:"center", width:"100%" }}>
+      <Text style={styles.title}>Welcome{"  "}Halima Sagheer</Text>
+      </View>
       {/*  */}
     </View>
   );
@@ -42,9 +44,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   ImageView: {
-    marginLeft: 110,
-    paddingTop: 30,
-    paddingBottom: 30,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 30,
+    marginBottom: 20,
   },
   Image: {
     height: 200,
@@ -54,11 +57,11 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     fontSize: 25,
-    paddingBottom: 30,
-    color: colors.dark,
+
+    color: "black",
     marginTop: 10,
     marginBottom: 10,
-    alignSelf: 'center',
+
   },
 
   btnView: {

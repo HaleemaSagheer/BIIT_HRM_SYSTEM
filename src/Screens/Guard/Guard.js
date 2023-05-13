@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Image, ScrollView} from 'react-native';
 import React, {useState} from 'react';
 import {colors} from '../../color/Theme';
 import emp1 from '../../Images/emp1.png';
@@ -34,7 +34,8 @@ export default function Guard({navigation}) {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
+    <View style={{ alignItems: 'center',}}>
       <Text style={styles.title}>Guard Side</Text>
       {employees.map(employee => (
         <TouchableOpacity
@@ -64,6 +65,7 @@ export default function Guard({navigation}) {
         </TouchableOpacity>
       ))}
     </View>
+    </ScrollView>
   );
 }
 
@@ -71,7 +73,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.primary,
-    alignItems: 'center',
+  
   },
   title: {
     padding: 10,

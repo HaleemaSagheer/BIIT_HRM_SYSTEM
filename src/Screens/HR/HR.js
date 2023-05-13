@@ -8,7 +8,9 @@ const HR = () => {
       <View style={styles.ImageView}>
         <Image style={styles.Image} source={require('../../Images/logo.png')} />
       </View>
-      <Text style={styles.title}>welcome HR</Text>
+      <View style={{alignItems:"center", width:"100%" }}>
+      <Text style={styles.title}>Welcome{"  "}HR</Text>
+      </View>
     </View>
   );
 };
@@ -52,9 +54,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   ImageView: {
-    marginLeft: 110,
-    paddingTop: 20,
-    paddingBottom: 30,
+  justifyContent:"center",
+  alignItems:"center",
+  marginTop:20,
+  marginBottom:20,
   },
   Image: {
     height: 200,
