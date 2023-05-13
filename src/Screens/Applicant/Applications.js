@@ -1,6 +1,6 @@
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import React from 'react';
-import {colors} from '../../color/Theme';
+import { colors } from '../../color/Theme';
 
 export default function Applications() {
   return (
@@ -8,46 +8,23 @@ export default function Applications() {
       <Text style={styles.title}>Applications</Text>
 
       <ScrollView style={styles}>
-        <View>
-          <View style={styles.scroll}>
-            <Text style={styles.text}> Job Title:</Text>
-            <Text style={styles.text}> Network Administrator</Text>
+        <View style={{ height: "100%", width: "100%", backgroundColor: colors.white,padding:20, borderRadius:15,  }}>
+          <View style={{ flexDirection: "row", alignItems: "center",marginBottom:10 }}>
+            <Text style={{ fontSize: 16, fontWeight: "500", color: colors.black, width:"30%" }}> Job Title:</Text>
+            <Text style={{ fontSize: 16, fontWeight: "800", color: colors.black, width:"70%", textAlign:"left" }}>Network Administrator</Text>
           </View>
-          <View style={styles.scroll}>
-            <Text style={styles.text}> 05-Feb-2023</Text>
+          <View style={{ flexDirection: "row", alignItems: "center", marginBottom:10 }}>
+            <Text style={{ fontSize: 16, fontWeight: "500", color: colors.black, width:"30%" }}> Date:</Text>
+            <Text style={{ fontSize: 16, fontWeight: "800", color: colors.black, width:"70%", textAlign:"left" }}>05-Feb-2023</Text>
           </View>
-          <View style={styles.scroll}>
-            <Text style={styles.text}> Rejected</Text>
+          <View style={{ flexDirection: "row", alignItems: "center", }}>
+            <Text style={{ fontSize: 16, fontWeight: "500", color: colors.black, width:"30%" }}> Status:</Text>
+            <Text style={{ fontSize: 16, fontWeight: "800", color: colors.black, width:"70%", textAlign:"left" }}>Rejected</Text>
           </View>
-        </View>
-        <View style={{flex: 1, height: 2, backgroundColor: colors.dark}} />
 
-        <View>
-          <View style={styles.scroll}>
-            <Text style={styles.text}> Job Title:</Text>
-            <Text style={styles.text}> Professor</Text>
-          </View>
-          <View style={styles.scroll}>
-            <Text style={styles.text}> 05-Feb-2023</Text>
-          </View>
-          <View style={styles.scroll}>
-            <Text style={styles.text}> Pending</Text>
-          </View>
         </View>
-        <View style={{flex: 1, height: 2, backgroundColor: colors.dark}} />
-        <View>
-          <View style={styles.scroll}>
-            <Text style={styles.text}> Job Title:</Text>
-            <Text style={styles.text}> Assistant Professor</Text>
-          </View>
-          <View style={styles.scroll}>
-            <Text style={styles.text}> 05-Feb-2023</Text>
-          </View>
-          <View style={styles.scroll}>
-            <Text style={styles.text}>Hired</Text>
-          </View>
-        </View>
-        <View style={{flex: 1, height: 2, backgroundColor: colors.dark}} />
+
+
       </ScrollView>
     </View>
   );
@@ -57,6 +34,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.primary,
+    padding: 20,
   },
   title: {
     fontWeight: 'bold',

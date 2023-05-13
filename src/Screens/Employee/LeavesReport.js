@@ -4,11 +4,11 @@ import MyTable from '../../component/MyTable';
 import {colors} from '../../color/Theme';
 
 export default function Attendance() {
-  const tableHead = ['From ', , 'To', 'Leave Type', 'Approved By'];
+  const tableHead = ['From ', , 'To', 'Leave\nType', 'Approved\nBy'];
   const tableData = [
-    ['01-jan-2022', '01-jan-2022', 'Sick Leave', 'Dr.Munir'],
-    ['01-jan-2022', '01-jan-2022', 'Earned Leave', 'Dr.Munir'],
-    ['01-jan-2022', '01-jan-2022', 'casual Leave', 'Dr.Munir'],
+    ['01-jan-2022', '01-jan-2022', 'Sick\nLeave', 'Dr.Munir'],
+    ['01-jan-2022', '01-jan-2022', 'Earned\nLeave', 'Dr.Munir'],
+    ['01-jan-2022', '01-jan-2022', 'casual\nLeave', 'Dr.Munir'],
   ];
 
   return (

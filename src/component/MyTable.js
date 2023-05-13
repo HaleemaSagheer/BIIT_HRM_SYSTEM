@@ -14,13 +14,14 @@ const MyTable = ({tableHead, tableData}) => {
           //widthArr={widthArr}
           heightArr={heightArr}
           data={tableHead}
-          style={styles.head}
+          style={styles.headingText}
           textStyle={styles.text}
         />
         <Rows
           //widthArr={widthArr}
           //heightArr={heightArr}
           data={tableData}
+          style={styles.head}
           textStyle={styles.text}
         />
       </Table>
@@ -41,7 +42,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20,
   },
-  text: {margin: 6, color: colors.dark},
+  headingText:{textAlign:"center", color: colors.black},
+  text: {textAlign:"center", color: colors.dark},
 });
 
 export default MyTable;

@@ -141,8 +141,8 @@ const styles = StyleSheet.create({
     fontSize: 25,
     paddingBottom: 30,
     color: '#000',
-    marginTop: 10,
-    marginBottom: 10,
+    marginTop: 20,
+
     alignSelf: 'center',
   },
   text: {
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
   },
 
   searcbar: {
-    padding: 20,
+    padding:20,
     marginBottom: 20,
     borderRadius: 10,
   },

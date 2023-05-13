@@ -51,6 +51,7 @@ const JobPost = ({navigation}) => {
     <ScrollView>
       <View style={styles.container}>
         <Text style={styles.title}>Post a new Job</Text>
+        <View style={{paddingTop:20, paddingLeft:20, paddingRight:20, paddingBottom:40,}}>
         <TextInput
           label="Job Title"
           value={jobtitle}
@@ -156,6 +157,7 @@ const JobPost = ({navigation}) => {
           POST
         </Button>
       </View>
+      </View>
     </ScrollView>
   );
 };
@@ -217,20 +219,18 @@ const styles = StyleSheet.create({
     color: colors.dark,
   },
   input: {
-    marginLeft: 20,
-    marginTop: 20,
+
     height: 50,
-    width: '90%',
+    width: '100%',
     borderRadius: 5,
-    alignSelf: 'center',
+
     color: colors.dark,
   },
   description: {
-    marginLeft: 20,
-    marginTop: 20,
-    width: '90%',
+
+    width: '100%',
     borderRadius: 5,
-    alignSelf: 'center',
+ 
     color: colors.dark,
   },
 });
