@@ -4,8 +4,10 @@ import {
   View,
   ScrollView,
   Image,
+  
   FlatList,
 } from 'react-native';
+import axios from 'axios';
 import {React, useState, useEffect} from 'react';
 //import {Button, card, Searchbar} from 'react-native-paper';
 import {colors} from '../../color/Theme';
@@ -20,6 +22,7 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import IP from '../../component/IP';
+import { Item } from 'react-native-paper/lib/typescript/components/List/List';
 
 export default function Jobs({navigation}) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -36,67 +39,62 @@ export default function Jobs({navigation}) {
     fetchJobs();
   }, []);
   const fetchJobs = async () => {
-    try {
-      const response = await fetch(
-        `http://${IP}/BIIT_HRM_System/api/Hr/AllJobs`,
-      );
-      const data = await response.json();
-      setJobsData(data);
-    } catch (error) {
-      console.error(error);
-    }
+    // try {
+    //   const response = await fetch(
+    //     `http://${IP}/HrmSystem/api/Job/JobGet`,
+    //   );
+    //   const data = await response.json();
+    //   setJobsData(data);
+    // } catch (error) {
+    //   console.error(error);
+    // }
+    await axios.get('http://192.168.124.37/HrmSystem/api/Job/JobGet').then((response)=>{
+      console.log(response.data)
+      setJobsData(response.data)
+    }).catch((error)=>{
+      console.log(error)
+    })
   };
 
   return (
     <View style={styles.container}>
-      <View>
+      {/* <View>
         <Image style={styles.Image} source={require('../../Images/job.png')} />
-      </View>
-      <Text style={styles.title}> Jobs</Text>
+      </View> */}
+      {/* <Text style={styles.title}> Jobs</Text> */}
       {/* // Searchbar */}
-      <View style={styles.searcbar}>
+      {/* <View style={styles.searcbar}>
         <Searchbar
           placeholder="Search"
           onChangeText={onChangeSearch}
           value={searchQuery}
         />
-      </View>
+      </View> */}
 
       <FlatList
+      columnWrapperStyle={{
+        flex:1, 
+        justifyContent:"space-between"
+      }}
+       numColumns={2}
         data={jobsData}
         renderItem={({item}) => (
-          <Card style={styles.cardContainer}>
-            <Card.Title title={item.job_title} titleStyle={styles.cardtitle} />
-            <Card.Content style={styles.cardContent}>
-              <View>
-                <Paragraph>
-                  <EvilIcons name="location" size={20} color={colors.dark} />
-                  <Text style={{marginLeft: 5}}>{item.job_location}</Text>
-                </Paragraph>
-                <Paragraph>
-                  <Fontisto name="wallet" size={15} color={colors.dark} />
-                  <Text style={{marginLeft: 10}}>
-                    Salary {item.salary_range}
-                  </Text>
-                </Paragraph>
-                <Paragraph>
-                  <Ionicons
-                    name="ios-briefcase-outline"
-                    size={15}
-                    color={colors.dark}
-                  />
-                  <Text>{item.job_type}</Text>
-                </Paragraph>
-              </View>
-            </Card.Content>
-            <Card.Actions style={styles.cardActions}>
-              <Button mode="contained" onPress={() => handleViewJob({item})}>
-                ViewJob
-              </Button>
-            </Card.Actions>
-          </Card>
+          <View style={{borderColor:"blue", borderWidth:1, marginBottom:20,backgroundColor:"plum" ,borderRadius:10, width:165,padding:10,height:100 }}>
+            <View style={{flexDirection:"row",alignItems:"center"}}>
+            <Text style={{fontSize:12, fontWeight:"400",color:colors.black, marginRight:10}}>Title</Text>
+            <Text style={{fontSize:14,fontWeight:"600",color:colors.black,}}>{item.Title}</Text>
+            </View>
+            <View style={{flexDirection:"row",alignItems:"center"}}>
+            <Text style={{fontSize:12,fontWeight:"400",color:colors.black, marginRight:10}}>Salary</Text>
+            <Text  style={{fontSize:14, fontWeight:"600",color:colors.black, textAlign:"left"}}>{item.Salary}</Text>
+            </View>
+            <View style={{flexDirection:"row",alignItems:"center"}}>
+            <Text style={{fontSize:12, fontWeight:"400",color:colors.black, marginRight:10}}>Location</Text>
+            <Text  style={{fontSize:14, fontWeight:"600",color:colors.black,}}>{item.Location}</Text>
+            </View>
+          </View>
         )}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={item => item.id}
       />
     </View>
   );
@@ -106,6 +104,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.primary,
+    padding:10,
   },
   ImageView: {
     marginLeft: 110,

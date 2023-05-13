@@ -34,7 +34,8 @@ export default function Personal({route, navigation}) {
   const [gender, setGender] = useState(userData.gender);
   const [email, setEmail] = useState(userData.email);
   const [imageData, setImageData] = useState({
-    uri: `http://192.168.0.191/BIIT_HRM_System/Images/${userData.Image}`,
+    // uri: `http://192.168.0.191/BIIT_HRM_System/Images/${userData.Image}`,
+    uri: `http://${IP}/HrmSystem/Images/${userData.Image}`,
   });
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
@@ -258,8 +259,8 @@ export default function Personal({route, navigation}) {
       <RadioButton.Group
         value={gender}
         onValueChange={value => setGender(value)}>
-        <RadioButton.Item uncheckedColor="red" label="Male" value="male" />
-        <RadioButton.Item uncheckedColor="red" label="Female" value="female" />
+        <RadioButton.Item uncheckedColor="red" label="Male" value="Male" />
+        <RadioButton.Item uncheckedColor="red" label="Female" value="Female" />
       </RadioButton.Group>
 
       <View>
