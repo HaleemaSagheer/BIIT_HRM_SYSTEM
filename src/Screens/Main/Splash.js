@@ -6,7 +6,7 @@ export default function Splash({navigation}) {
   useEffect(() => {
     setTimeout(() => {
       navigation.navigate('Login');
-    }, 500);
+    }, 300);
   }, []);
   return (
     <View style={styles.container}>
