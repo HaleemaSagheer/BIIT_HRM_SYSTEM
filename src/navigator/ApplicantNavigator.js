@@ -29,19 +29,19 @@ export default function ApplicantNavigator({route}) {
       <Drawer.Screen
         name="Applicant"
         component={Applicant}
-        initialParams={userData}
+        initialParams={{userData:userData}}
       />
 
       <Drawer.Screen name="Jobs" component={Jobs} initialParams={{userData}} />
       <Drawer.Screen
         name="Profile"
         component={Profile}
-        initialParams={{userData}}
+        initialParams={{userData:userData}}
       />
       <Drawer.Screen
         name="Applications"
         component={Applications}
-        initialParams={{userData}}
+        initialParams={{userData:userData}}
       />
       <Drawer.Screen
         options={{
@@ -53,7 +53,7 @@ export default function ApplicantNavigator({route}) {
         }}
         name="Personal"
         component={Personal}
-        initialParams={{userData}}
+        initialParams={{userData:userData}}
       />
       <Drawer.Screen
         //options={{drawerItemStyle: {height: 0}}}
@@ -66,7 +66,7 @@ export default function ApplicantNavigator({route}) {
         }}
         name="Education"
         component={Education}
-        initialParams={{userData}}
+        initialParams={{userData:userData}}
       />
       <Drawer.Screen
         options={{
@@ -78,7 +78,7 @@ export default function ApplicantNavigator({route}) {
         }}
         name="Experience"
         component={Experience}
-        initialParams={{userData}}
+        initialParams={{userData:userData}}
       />
       <Drawer.Screen
         options={{
@@ -90,7 +90,7 @@ export default function ApplicantNavigator({route}) {
         }}
         name="JobDetails"
         component={JobDetails}
-        initialParams={{userData}}
+        initialParams={{userData:userData}}
       />
       <Drawer.Screen
         options={{
@@ -102,7 +102,7 @@ export default function ApplicantNavigator({route}) {
         }}
         name="Apply"
         component={Apply}
-        initialParams={{userData}}
+        initialParams={{userData:userData}}
       />
     </Drawer.Navigator>
   );

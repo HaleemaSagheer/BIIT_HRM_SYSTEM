@@ -7,19 +7,20 @@ import IP from '../../component/IP';
 
 export default function Education({route}) {
   const {userData} = route.params;
+  console.log("Education",userData.Educations)
   const [title, setTitle] = useState('');
   const [major, setMajor] = useState('');
   const [board, setBoard] = useState('');
   const [passingYear, setPassingYear] = useState(0);
-  const [edudata, setEduData] = useState([]);
+  const [edudata, setEduData] = useState(userData.Educations);
   // console.log(userData.Uid);
 
   const renderEdu = ({item}) => (
     <View style={styles.card}>
       <Text style={styles.txt}> Title:{item.Title}</Text>
-      <Text style={styles.txt}>Major : {item.Major}</Text>
+      <Text style={styles.txt}>Major : {item.Degree}</Text>
       <Text style={styles.txt}>Board : {item.Board}</Text>
-      <Text style={styles.txt}>Passing Year : {item.Year}</Text>
+      <Text style={styles.txt}>Passing Year : {item.Enddate}</Text>
     </View>
   );
   const handleSubmit = async () => {
@@ -145,10 +146,10 @@ export default function Education({route}) {
           Add
         </Button>
       </View>
-      <FlatList data={edudata} renderItem={renderEdu} />
-      <Button mode="contained" style={styles.btn} onPress={handleSubmit}>
+      <FlatList keyExtractor={item => item.id} data={edudata} renderItem={renderEdu} />
+      {/* <Button mode="contained" style={styles.btn} onPress={handleSubmit}>
         Submit
-      </Button>
+      </Button> */}
     </View>
   );
 }
@@ -170,8 +171,8 @@ const styles = StyleSheet.create({
   card: {
     borderWidth: 2,
     borderColor: colors.dark,
-    marginLeft: 10,
-    marginRight: 10,
+    // marginLeft: 10,
+    // marginRight: 10,
     padding: 10,
     marginBottom: 10,
   },

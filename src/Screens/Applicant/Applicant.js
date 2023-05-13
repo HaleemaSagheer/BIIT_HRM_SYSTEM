@@ -4,7 +4,7 @@ import { colors } from '../../color/Theme';
 // import {TouchableOpacity} from 'react-native-gesture-handler';
 
 export default function Applicant({ route, navigation }) {
-  const userData = route.params;
+  const {userData }= route.params;
   // console.log('Applicant');
   // console.log(userData.Fname);
   const onPressProfile = () => {
@@ -26,7 +26,7 @@ export default function Applicant({ route, navigation }) {
         />
       </View>
       <View style={{alignItems:"center", width:"100%" }}>
-      <Text style={styles.title}>Welcome{"  "}Halima Sagheer</Text>
+      <Text style={styles.title}>Welcome{"  "}{userData.Lname+' '+userData.Fname}</Text>
       </View>
       {/*  */}
     </View>

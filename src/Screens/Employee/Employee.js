@@ -22,7 +22,7 @@ export default function Employee({route, navigation}) {
       </View>
       {/* <Text style={styles.title}>welcome {userData.Fname}</Text> */}
       <View style={{alignItems:"center", width:"100%" }}>
-      <Text style={styles.title}>Welcome{"  "}{userData.Fname}</Text>
+      <Text style={styles.title}>Welcome{"  "}{userData.Fname+' '+userData.Lname}</Text>
       </View>
     </View>
   );

@@ -9,7 +9,7 @@ import {
 import { React, useEffect, useState } from 'react';
 import IP from '../../component/IP';
 import Input from '../../component/Input';
-
+import axios from 'axios';
 import { Button, TextInput, Searchbar } from 'react-native-paper';
 import { Icon } from 'react-native-paper/lib/typescript/components/Avatar/Avatar';
 import { Entypo } from 'react-native-vector-icons/Entypo';
@@ -22,34 +22,56 @@ export default function Login({ navigation }) {
   const [password, setPassword] = useState('');
   const loginHandler = async () => {
     //console.log('Entered');
-    try {
-      const response = await fetch(
-        `http://${IP}/BIIT_HRM_System/api/User/Login?email=${email}&password=${password}`,
-        // `http://192.168.18.66/BIITHRMSystem/api/User/Login?email=${email}&password=${password} `,
-        {
-          method: 'Post',
-        },
-      );
+    // try {
+    //   const response = await fetch(
+    //     `http://${IP}/BIIT_HRM_System/api/User/Login?email=${email}&password=${password}`,
+    //     // `http://192.168.18.66/BIITHRMSystem/api/User/Login?email=${email}&password=${password} `,
+    //     {
+    //       method: 'Post',
+    //     },
+    //   );
 
-      const data = await response.json();
-      console.log(response);
-      console.log(data.login.role);
-      if (data.login.role == 'Applicant') {
-        navigation.navigate('ApplicantNavigator', { userData: data.login });
-      }
-      if (data.login.role == 'Employee') {
-        navigation.navigate('EmployeeNavigator', { userData: data.login });
-      }
-      if (data.login.role == 'Guard') {
-        navigation.navigate('GuardNavigator', { userData: data.login });
-      }
+    //   const data = await response.json();
+    //   console.log(response);
+    //   console.log(data.login.role);
+    //   if (data.login.role == 'Applicant') {
+    //     navigation.navigate('ApplicantNavigator', { userData: data.login });
+    //   }
+    //   if (data.login.role == 'Employee') {
+    //     navigation.navigate('EmployeeNavigator', { userData: data.login });
+    //   }
+    //   if (data.login.role == 'Guard') {
+    //     navigation.navigate('GuardNavigator', { userData: data.login });
+    //   }
 
-      if (data.login.role == 'HR') {
-        navigation.navigate('HrNavigator', { userData: data.login });
-      }
-    } catch (err) {
-      console.log(err);
-    }
+    //   if (data.login.role == 'HR') {
+    //     navigation.navigate('HrNavigator', { userData: data.login });
+    //   }
+    // } catch (err) {
+    //   console.log(err);
+    // }
+
+    await axios.get(`http://${IP}/HrmSystem/api/User/Login?email=${email}&password=${password}`).then((response)=>{
+      console.log(response.data.role)
+      if (response.data.role == 'applicant') {
+            navigation.navigate('ApplicantNavigator', { userData: response.data });
+          }
+          if (response.data.role == 'employee') {
+            navigation.navigate('EmployeeNavigator', { userData: response.data });
+          }
+          if (response.data.role == 'guard') {
+            navigation.navigate('GuardNavigator', { userData: response.data });
+          }
+    
+          if (response.data.role == 'hr') {
+            navigation.navigate('HrNavigator', { userData: response.data });
+          }
+
+    }).catch((error)=>{
+      console.log(error)
+    })
+
+
   };
 
   const handleRegister = () => {

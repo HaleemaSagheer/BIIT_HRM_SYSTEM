@@ -14,7 +14,7 @@ const AllJobs = ({navigation}) => {
   const fetchdata = async () => {
     try {
       const response = await fetch(
-        `http://192.168.18.66/BIIT_HRM_System/api/Hr/AllJobs`,
+        `http://192.168.124.37/HrmSystem/api/Job/JobGet`,
       );
       const data = await response.json();
       setJobsData(data);
@@ -33,7 +33,7 @@ const AllJobs = ({navigation}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>All Jobs</Text>
-      <FlatList
+      {/* <FlatList
         data={jobsData}
         renderItem={({item}) => (
           <Card style={styles.cardContainer}>
@@ -61,7 +61,7 @@ const AllJobs = ({navigation}) => {
               </View>
             </Card.Content>
             <Card.Actions style={styles.cardActions}>
-              <Button mode="contained" onPress={() => handleViewJob({item})}>
+              <Button  mode="contained" onPress={() => handleViewJob({item})}>
                 ViewJob
               </Button>
               <Button mode="contained" onPress={() => handleDelete({item})}>
@@ -73,8 +73,8 @@ const AllJobs = ({navigation}) => {
             </Card.Actions>
           </Card>
         )}
-        keyExtractor={item => item.id.toString()}
-      />
+        keyExtractor={item => item.id}
+      /> */}
     </View>
   );
 };

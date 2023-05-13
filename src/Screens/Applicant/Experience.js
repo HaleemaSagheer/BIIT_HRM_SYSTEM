@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, FlatList} from 'react-native';
+import {StyleSheet, Text, View, FlatList,ScrollView} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 import React, {useState} from 'react';
 import {colors} from '../../color/Theme';
@@ -6,14 +6,15 @@ import CheckBox from '@react-native-community/checkbox';
 import Input from '../../component/Input';
 
 export default function Experience({route}) {
-  const userData = route.params;
-  const [expdata, setExpData] = useState([]);
+  const {userData }= route.params;
+  console.log("experience", userData.Experiences)
+  const [expdata, setExpData] = useState(userData.Experiences);
   const [company, setCompany] = useState('');
   const [title, setTitle] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [currentlyWorking, setCurrentlyWorking] = useState(false);
-  const [hasExperience, setHasExperience] = useState(false);
+  const [hasExperience, setHasExperience] = useState(true);
   const [isFresher, setIsFresher] = useState(false);
 
   const handleSubmit = async () => {
@@ -55,11 +56,11 @@ export default function Experience({route}) {
 
   const renderExp = ({item}) => (
     <View style={styles.card}>
-      <Text> Title: {item.title}</Text>
-      <Text> Company: {item.company}</Text>
-      <Text> Starting Date: {item.startDate}</Text>
-      <Text> Ending Date: {item.endDate}</Text>
-      <Text> Still Working: {item.currentlyWorking}</Text>
+      <Text> Title: {item.Title}</Text>
+      <Text> Company: {item.Company}</Text>
+      <Text> Starting Date: {item.Startdate}</Text>
+      <Text> Ending Date: {item.Enddate}</Text>
+      <Text> Still Working: {item.currentwork}</Text>
     </View>
   );
 
@@ -94,7 +95,7 @@ export default function Experience({route}) {
       </View>
 
       {hasExperience && (
-        <View>
+        <View style={{flex:1}}>
           <Input
             title="Job"
             placeholder="Title of job"
@@ -135,7 +136,8 @@ export default function Experience({route}) {
             Add
           </Button>
           {expdata.length > 0 ? (
-            <FlatList data={expdata} renderItem={renderExp} />
+            
+            <FlatList keyExtractor={item => item.id}  data={expdata} renderItem={renderExp} />
           ) : (
             <Text>No experience added yet.</Text>
           )}
@@ -144,9 +146,9 @@ export default function Experience({route}) {
 
       {!hasExperience && <Text>Being a fresher is absolutely fine!</Text>}
 
-      <Button mode="contained" style={styles.btn} onPress={handleSubmit}>
+      {/* <Button mode="contained" style={styles.btn} onPress={handleSubmit}>
         Submit
-      </Button>
+      </Button> */}
     </View>
   );
 }
@@ -155,8 +157,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.primary,
-    paddingHorizontal: 40,
-    paddingVertical: 40,
+    padding:20,
   },
   CheckStyle: {
     marginLeft: 10,
