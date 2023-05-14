@@ -12,7 +12,7 @@ export default function Education({route}) {
   const [major, setMajor] = useState('');
   const [board, setBoard] = useState('');
   const [passingYear, setPassingYear] = useState(0);
-  const [edudata, setEduData] = useState(userData.Educations);
+  const [edudata, setEduData] = useState([]);
   // console.log(userData.Uid);
 
   const renderEdu = ({item}) => (
@@ -130,9 +130,9 @@ export default function Education({route}) {
         </Button>
       </View>
       <FlatList keyExtractor={item => item.id} data={edudata} renderItem={renderEdu} />
-      {/* <Button mode="contained" style={styles.btn} onPress={handleSubmit}>
+      <Button mode="contained" style={styles.btn} onPress={handleSubmit}>
         Submit
-      </Button> */}
+      </Button>
     </View>
   );
 }

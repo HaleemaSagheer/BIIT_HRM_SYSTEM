@@ -8,21 +8,22 @@ import React, { useState } from 'react';
 import { colors } from '../../color/Theme';
 import CheckBox from '@react-native-community/checkbox';
 import Input from '../../component/Input';
-
+import axios from 'axios';
 export default function Experience({ route }) {
 
   const { userData } = route.params;
-  console.log("experience", userData.Experiences)
-  const [expdata, setExpData] = useState(userData.Experiences);
-  const [company, setCompany] = useState('');
-  const [title, setTitle] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+
+  const [expdata, setExpData] = useState([]);
+  const [company, setCompany] = useState("");
+  const [title, setTitle] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [currentlyWorking, setCurrentlyWorking] = useState(false);
-  const [hasExperience, setHasExperience] = useState(true);
+  const [hasExperience, setHasExperience] = useState(false);
   const [isFresher, setIsFresher] = useState(false);
 
   const handleSubmit = async () => {
+    console.log(company.toString() +' '+title.toString())
     try {
       if (isFresher) {
         // Handle submission for fresher
@@ -30,7 +31,47 @@ export default function Experience({ route }) {
       } else {
         // Handle submission for experienced user
         console.log('Submit with Experience');
-        console.log(expdata);
+        console.log("list add",expdata);
+        await axios.post(`http://192.168.154.37/HrmSystem/api/Experience/ExperiencePost`,
+        {
+          
+            Title: title.toString(),
+            Company: company.toString(),
+            Startdate: startDate.toString(),
+            Enddate: endDate.toString(),
+            hasexperienced:hasExperience.toString(),
+            currentwork: currentlyWorking,
+            Uid: userData.Uid,
+            key: String(expdata.length),
+            otherskill: "Asp.net"
+          
+        }
+  
+      ).then((response) => {
+        console.log(response.data)
+        setExpData([
+          ...expdata,
+          {
+            Title: title,
+            Company: company,
+            Startdate: startDate.toString(),
+            Enddate: endDate.toString(),
+            currentwork: currentlyWorking,
+            Uid: userData.Uid,
+            key: String(expdata.length),
+            otherskill: "Asp.net"
+          },
+        ]);
+             // Reset input fields
+      setTitle('');
+      setCompany('');
+      setStartDate('');
+      setEndDate('');
+      setCurrentlyWorking(false);
+       
+      }).catch((erorr) => {
+        console.log(erorr)
+      })
       }
     } catch (error) {
       console.log('ERROR REQUEST', error);
@@ -41,32 +82,33 @@ export default function Experience({ route }) {
     setExpData([
       ...expdata,
       {
-        JobTitle: title,
-        Organization: organization,
-        StartDate: startDate,
-        EndDate: endDate,
-        CurrentlyWorking: currentlyWorking,
-        ApplicantId: userData.Uid,
+        Title: title,
+        Company: company,
+        Startdate: startDate.toString(),
+        Enddate: endDate.toString(),
+        currentwork: currentlyWorking,
+        Uid: userData.Uid,
         key: String(expdata.length),
+        otherskill: "Asp.net"
       },
     ]);
+     // Reset input fields
+      // setTitle('');
+      // setCompany('');
+      // setStartDate('');
+      // setEndDate('');
+      // setCurrentlyWorking(false);
 
-    // Reset input fields
-    setTitle('');
-    setOrganization('');
-    setStartDate('');
-    setEndDate('');
-    setCurrentlyWorking(false);
   };
 
   const renderExp = ({ item }) => (
     <View style={styles.card}>
 
-      <Text> Title: {item.Title}</Text>
-      <Text> Company: {item.Company}</Text>
-      <Text> Starting Date: {item.Startdate}</Text>
-      <Text> Ending Date: {item.Enddate}</Text>
-      <Text> Still Working: {item.currentwork}</Text>
+      <Text> Title: {item.JobTitle}</Text>
+      <Text> Company: {item.Organization}</Text>
+      <Text> Starting Date: {item.startDate}</Text>
+      <Text> Ending Date: {item.endDate}</Text>
+      <Text> Still Working: {item.CurrentlyWorking}</Text>
 
       {/* <Text> Title: {item.title}</Text>
       <Text> Company: {item.organization}</Text>
@@ -85,7 +127,7 @@ export default function Experience({ route }) {
   );
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Text style={styles.title}>Experience </Text>
 
       <View
@@ -152,9 +194,9 @@ export default function Experience({ route }) {
             value={endDate}
             setValue={setEndDate}
           />
-          <Button mode="contained" style={styles.btn} onPress={handleAddExp}>
+          {/* <Button mode="contained" style={styles.btn} onPress={handleAddExp}>
             Add
-          </Button>
+          </Button> */}
 
           {expdata.length > 0 ? (
 
@@ -174,10 +216,10 @@ export default function Experience({ route }) {
         </Text>
       )}
 
-      {/* <Button mode="contained" style={styles.btn} onPress={handleSubmit}>
+      <Button mode="contained" style={styles.btn} onPress={handleSubmit}>
         Submit
-      </Button> */}
-    </View>
+      </Button>
+    </ScrollView>
   );
 }
 

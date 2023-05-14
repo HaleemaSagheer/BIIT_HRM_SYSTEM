@@ -2,7 +2,8 @@ import { StyleSheet, Text, View, ScrollView,FlatList, Touchable, TouchableOpacit
 import React ,{useEffect,useState} from 'react';
 import { colors } from '../../color/Theme';
 import axios from 'axios';
-export default function Applications() {
+export default function Applications({route}) {
+  const { userData } = route.params;
   const [jobsData, setJobsData] = useState([]);
   useEffect(() => {
     fetchJobs();
@@ -17,9 +18,11 @@ export default function Applications() {
     // } catch (error) {
     //   console.error(error);
     // }
-    await axios.get(`http://192.168.93.37/HrmSystem/api/Job/JobGet`).then((response)=>{
+    await axios.get(`http://192.168.154.37/HrmSystem/api/JobApplication/JobApplicationGet?appid=${userData.Uid}`).then((response)=>{
       console.log("jOB",response.data)
-      setJobsData(response.data)
+      // for (var i=0; i < response.data.length ; i++)
+      //   console.log("in loop",response.data[i].Educations)
+      // // setJobsData(response.data)
     }).catch((error)=>{
       console.log(error)
     })
@@ -39,7 +42,7 @@ export default function Applications() {
       />
     </View> */}
 
-    <FlatList
+    {/* <FlatList
     columnWrapperStyle={{
       flex:1, 
       justifyContent:"space-between"
@@ -48,6 +51,7 @@ export default function Applications() {
       data={jobsData}
       renderItem={({item}) => (
         <View style={{borderColor:"blue", borderWidth:1, marginBottom:20,backgroundColor:"plum" ,borderRadius:10, width:165,height:100 }}>
+          <View style={{padding:10}}>
           <View style={{flexDirection:"row",alignItems:"center"}}>
           <Text style={{fontSize:12, fontWeight:"400",color:colors.black, marginRight:10}}>Title</Text>
           <Text style={{fontSize:14,fontWeight:"600",color:colors.black,}}>{item.Title}</Text>
@@ -60,15 +64,11 @@ export default function Applications() {
           <Text style={{fontSize:12, fontWeight:"400",color:colors.black, marginRight:10}}>Location</Text>
           <Text  style={{fontSize:14, fontWeight:"600",color:colors.black,}}>{item.Location}</Text>
           </View>
-          <View style={{flex:1, justifyContent:"flex-end"}}>
-          <TouchableOpacity style={{padding:5,height:30,backgroundColor:"grey", justifyContent:"center",alignItems:"center", borderBottomLeftRadius:10,borderBottomRightRadius:10}}>
-            <Text>Apply</Text>
-          </TouchableOpacity>
-          </View>
+</View>
         </View>
       )}
       keyExtractor={item => item.id}
-    />
+    /> */}
   </View>
   );
 }

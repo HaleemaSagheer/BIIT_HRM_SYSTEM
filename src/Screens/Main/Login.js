@@ -29,7 +29,7 @@ export default function Login({ navigation }) {
 
     console.log(email)
     console.log(password)
-    await axios.get(`http://192.168.93.37/HrmSystem/api/User/Login?email=${email}&password=${password}`).then((response) => {
+    await axios.get(`http://192.168.154.37/HrmSystem/api/User/Login?email=${email}&password=${password}`).then((response) => {
       console.log(response.data.role)
       if (response.data.role == 'applicant') {
         navigation.navigate('ApplicantNavigator', { userData: response.data });
@@ -198,6 +198,6 @@ const styles = StyleSheet.create({
     height: 50,
     width: '100%',
     borderRadius: 5,
-    alignSelf: 'center',
+   
   },
 });
