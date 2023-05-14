@@ -1,33 +1,29 @@
 
-import {StyleSheet, Text, View, FlatList,ScrollView} from 'react-native';
+import { StyleSheet, Text, View, FlatList, ScrollView } from 'react-native';
 
-import {StyleSheet, Text, View, FlatList, ScrollView} from 'react-native';
 
-import {Button, TextInput} from 'react-native-paper';
-import React, {useState} from 'react';
-import {colors} from '../../color/Theme';
+
+import { Button, TextInput } from 'react-native-paper';
+import React, { useState } from 'react';
+import { colors } from '../../color/Theme';
 import CheckBox from '@react-native-community/checkbox';
 import Input from '../../component/Input';
+import axios from 'axios';
+export default function Experience({ route }) {
 
-export default function Experience({route}) {
+  const { userData } = route.params;
 
-  const {userData }= route.params;
-  console.log("experience", userData.Experiences)
-  const [expdata, setExpData] = useState(userData.Experiences);
-  const [company, setCompany] = useState('');
-
-  const userData = route.params;
   const [expdata, setExpData] = useState([]);
-  const [organization, setOrganization] = useState('');
-
-  const [title, setTitle] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [company, setCompany] = useState("");
+  const [title, setTitle] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [currentlyWorking, setCurrentlyWorking] = useState(false);
-  const [hasExperience, setHasExperience] = useState(true);
+  const [hasExperience, setHasExperience] = useState(false);
   const [isFresher, setIsFresher] = useState(false);
 
   const handleSubmit = async () => {
+    console.log(company.toString() +' '+title.toString())
     try {
       if (isFresher) {
         // Handle submission for fresher
@@ -35,7 +31,47 @@ export default function Experience({route}) {
       } else {
         // Handle submission for experienced user
         console.log('Submit with Experience');
-        console.log(expdata);
+        console.log("list add",expdata);
+        await axios.post(`http://192.168.154.37/HrmSystem/api/Experience/ExperiencePost`,
+        {
+          
+            Title: title.toString(),
+            Company: company.toString(),
+            Startdate: startDate.toString(),
+            Enddate: endDate.toString(),
+            hasexperienced:hasExperience.toString(),
+            currentwork: currentlyWorking,
+            Uid: userData.Uid,
+            key: String(expdata.length),
+            otherskill: "Asp.net"
+          
+        }
+  
+      ).then((response) => {
+        console.log(response.data)
+        setExpData([
+          ...expdata,
+          {
+            Title: title,
+            Company: company,
+            Startdate: startDate.toString(),
+            Enddate: endDate.toString(),
+            currentwork: currentlyWorking,
+            Uid: userData.Uid,
+            key: String(expdata.length),
+            otherskill: "Asp.net"
+          },
+        ]);
+             // Reset input fields
+      setTitle('');
+      setCompany('');
+      setStartDate('');
+      setEndDate('');
+      setCurrentlyWorking(false);
+       
+      }).catch((erorr) => {
+        console.log(erorr)
+      })
       }
     } catch (error) {
       console.log('ERROR REQUEST', error);
@@ -46,37 +82,38 @@ export default function Experience({route}) {
     setExpData([
       ...expdata,
       {
-        JobTitle: title,
-        Organization: organization,
-        StartDate: startDate,
-        EndDate: endDate,
-        CurrentlyWorking: currentlyWorking,
-        ApplicantId: userData.Uid,
+        Title: title,
+        Company: company,
+        Startdate: startDate.toString(),
+        Enddate: endDate.toString(),
+        currentwork: currentlyWorking,
+        Uid: userData.Uid,
         key: String(expdata.length),
+        otherskill: "Asp.net"
       },
     ]);
+     // Reset input fields
+      // setTitle('');
+      // setCompany('');
+      // setStartDate('');
+      // setEndDate('');
+      // setCurrentlyWorking(false);
 
-    // Reset input fields
-    setTitle('');
-    setOrganization('');
-    setStartDate('');
-    setEndDate('');
-    setCurrentlyWorking(false);
   };
 
-  const renderExp = ({item}) => (
+  const renderExp = ({ item }) => (
     <View style={styles.card}>
 
-      <Text> Title: {item.Title}</Text>
-      <Text> Company: {item.Company}</Text>
-      <Text> Starting Date: {item.Startdate}</Text>
-      <Text> Ending Date: {item.Enddate}</Text>
-      <Text> Still Working: {item.currentwork}</Text>
-
-      <Text> Title: {item.title}</Text>
-      <Text> Company: {item.organization}</Text>
+      <Text> Title: {item.JobTitle}</Text>
+      <Text> Company: {item.Organization}</Text>
       <Text> Starting Date: {item.startDate}</Text>
       <Text> Ending Date: {item.endDate}</Text>
+      <Text> Still Working: {item.CurrentlyWorking}</Text>
+
+      {/* <Text> Title: {item.title}</Text>
+      <Text> Company: {item.organization}</Text>
+      <Text> Starting Date: {item.startDate}</Text>
+      <Text> Ending Date: {item.endDate}</Text> */}
       {/* if the currentlyWorking property is true, it indicates that the 
       item is still ongoing and there is no end date specified. If it is false, 
       it means that the item has ended and the endDate property contains the date when it ended. */}
@@ -90,11 +127,11 @@ export default function Experience({route}) {
   );
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Text style={styles.title}>Experience </Text>
 
       <View
-        style={{flexDirection: 'row', alignItems: 'center', marginBottom: 10}}>
+        style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
         <CheckBox
           style={styles.CheckStyle}
           value={hasExperience}
@@ -103,11 +140,11 @@ export default function Experience({route}) {
             setIsFresher(false);
           }}
         />
-        <Text style={{color: colors.dark}}>Have Experience?</Text>
+        <Text style={{ color: colors.dark }}>Have Experience?</Text>
       </View>
 
       <View
-        style={{flexDirection: 'row', alignItems: 'center', marginBottom: 10}}>
+        style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
         <CheckBox
           style={styles.CheckStyle}
           value={isFresher}
@@ -116,11 +153,11 @@ export default function Experience({route}) {
             setHasExperience(false);
           }}
         />
-        <Text style={{color: colors.dark}}>Fresher</Text>
+        <Text style={{ color: colors.dark }}>Fresher</Text>
       </View>
 
       {hasExperience && (
-        <View style={{flex:1}}>
+        <View style={{ flex: 1 }}>
           <Input
             title="Job"
             placeholder="Title of job"
@@ -132,8 +169,8 @@ export default function Experience({route}) {
             title="Company"
             placeholder="Company Name"
             variant="simple"
-            value={organization}
-            setValue={setOrganization}
+            value={company}
+            setValue={setCompany}
           />
           <Input
             title="Starting Date"
@@ -142,13 +179,13 @@ export default function Experience({route}) {
             value={startDate}
             setValue={setStartDate}
           />
-          <View style={{flexDirection: 'row'}}>
+          <View style={{ flexDirection: 'row' }}>
             <CheckBox
               style={styles.CheckStyle}
               value={currentlyWorking}
               onValueChange={val => setCurrentlyWorking(val)}
             />
-            <Text style={{color: colors.dark}}>Still Working?</Text>
+            <Text style={{ color: colors.dark }}>Still Working?</Text>
           </View>
           <Input
             title="Ending Date"
@@ -157,45 +194,32 @@ export default function Experience({route}) {
             value={endDate}
             setValue={setEndDate}
           />
-          <Button mode="contained" style={styles.btn} onPress={handleAddExp}>
+          {/* <Button mode="contained" style={styles.btn} onPress={handleAddExp}>
             Add
-          </Button>
+          </Button> */}
 
           {expdata.length > 0 ? (
-            
-            <FlatList keyExtractor={item => item.id}  data={expdata} renderItem={renderExp} />
+
+            <FlatList keyExtractor={item => item.id} data={expdata} renderItem={renderExp} />
           ) : (
             <Text>No experience added yet.</Text>
           )}
 
-          <View>
-            {/* This checks whether there are any items in the expdata array.
-             If there are, the FlatList will be rendered. If not, a simple text
-             message saying "No experience added yet." will be rendered instead. */}
-            {expdata.length > 0 ? (
-              <FlatList
-                data={expdata}
-                renderItem={renderExp}
-                keyExtractor={(item, index) => index.toString()}
-              />
-            ) : (
-              <Text style={{color: colors.dark}}>No experience added yet.</Text>
-            )}
-          </View>
+
 
         </View>
       )}
 
       {!hasExperience && (
-        <Text style={{color: colors.dark}}>
+        <Text style={{ color: colors.dark }}>
           Being a fresher is absolutely fine!
         </Text>
       )}
 
-      {/* <Button mode="contained" style={styles.btn} onPress={handleSubmit}>
+      <Button mode="contained" style={styles.btn} onPress={handleSubmit}>
         Submit
-      </Button> */}
-    </View>
+      </Button>
+    </ScrollView>
   );
 }
 
@@ -203,7 +227,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.primary,
-    padding:20,
+    padding: 20,
   },
   CheckStyle: {
     marginLeft: 10,
