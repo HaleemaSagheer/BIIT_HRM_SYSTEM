@@ -48,8 +48,8 @@ export default function Jobs({navigation}) {
     // } catch (error) {
     //   console.error(error);
     // }
-    await axios.get('http://192.168.124.37/HrmSystem/api/Job/JobGet').then((response)=>{
-      console.log(response.data)
+    await axios.get(`http://192.168.93.37/HrmSystem/api/Job/JobGet`).then((response)=>{
+      console.log("jOB",response.data)
       setJobsData(response.data)
     }).catch((error)=>{
       console.log(error)

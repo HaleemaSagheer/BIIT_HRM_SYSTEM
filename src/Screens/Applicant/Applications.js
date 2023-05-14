@@ -1,32 +1,75 @@
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
-import React from 'react';
+import { StyleSheet, Text, View, ScrollView,FlatList, Touchable, TouchableOpacity } from 'react-native';
+import React ,{useEffect,useState} from 'react';
 import { colors } from '../../color/Theme';
-
+import axios from 'axios';
 export default function Applications() {
+  const [jobsData, setJobsData] = useState([]);
+  useEffect(() => {
+    fetchJobs();
+  }, []);
+  const fetchJobs = async () => {
+    // try {
+    //   const response = await fetch(
+    //     `http://${IP}/HrmSystem/api/Job/JobGet`,
+    //   );
+    //   const data = await response.json();
+    //   setJobsData(data);
+    // } catch (error) {
+    //   console.error(error);
+    // }
+    await axios.get(`http://192.168.93.37/HrmSystem/api/Job/JobGet`).then((response)=>{
+      console.log("jOB",response.data)
+      setJobsData(response.data)
+    }).catch((error)=>{
+      console.log(error)
+    })
+  };
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Applications</Text>
+    {/* <View>
+      <Image style={styles.Image} source={require('../../Images/job.png')} />
+    </View> */}
+    {/* <Text style={styles.title}> Jobs</Text> */}
+    {/* // Searchbar */}
+    {/* <View style={styles.searcbar}>
+      <Searchbar
+        placeholder="Search"
+        onChangeText={onChangeSearch}
+        value={searchQuery}
+      />
+    </View> */}
 
-      <ScrollView style={styles}>
-        <View style={{ height: "100%", width: "100%", backgroundColor: colors.white,padding:20, borderRadius:15,  }}>
-          <View style={{ flexDirection: "row", alignItems: "center",marginBottom:10 }}>
-            <Text style={{ fontSize: 16, fontWeight: "500", color: colors.black, width:"30%" }}> Job Title:</Text>
-            <Text style={{ fontSize: 16, fontWeight: "800", color: colors.black, width:"70%", textAlign:"left" }}>Network Administrator</Text>
+    <FlatList
+    columnWrapperStyle={{
+      flex:1, 
+      justifyContent:"space-between"
+    }}
+     numColumns={2}
+      data={jobsData}
+      renderItem={({item}) => (
+        <View style={{borderColor:"blue", borderWidth:1, marginBottom:20,backgroundColor:"plum" ,borderRadius:10, width:165,height:100 }}>
+          <View style={{flexDirection:"row",alignItems:"center"}}>
+          <Text style={{fontSize:12, fontWeight:"400",color:colors.black, marginRight:10}}>Title</Text>
+          <Text style={{fontSize:14,fontWeight:"600",color:colors.black,}}>{item.Title}</Text>
           </View>
-          <View style={{ flexDirection: "row", alignItems: "center", marginBottom:10 }}>
-            <Text style={{ fontSize: 16, fontWeight: "500", color: colors.black, width:"30%" }}> Date:</Text>
-            <Text style={{ fontSize: 16, fontWeight: "800", color: colors.black, width:"70%", textAlign:"left" }}>05-Feb-2023</Text>
+          <View style={{flexDirection:"row",alignItems:"center"}}>
+          <Text style={{fontSize:12,fontWeight:"400",color:colors.black, marginRight:10}}>Salary</Text>
+          <Text  style={{fontSize:14, fontWeight:"600",color:colors.black, textAlign:"left"}}>{item.Salary}</Text>
           </View>
-          <View style={{ flexDirection: "row", alignItems: "center", }}>
-            <Text style={{ fontSize: 16, fontWeight: "500", color: colors.black, width:"30%" }}> Status:</Text>
-            <Text style={{ fontSize: 16, fontWeight: "800", color: colors.black, width:"70%", textAlign:"left" }}>Rejected</Text>
+          <View style={{flexDirection:"row",alignItems:"center"}}>
+          <Text style={{fontSize:12, fontWeight:"400",color:colors.black, marginRight:10}}>Location</Text>
+          <Text  style={{fontSize:14, fontWeight:"600",color:colors.black,}}>{item.Location}</Text>
           </View>
-
+          <View style={{flex:1, justifyContent:"flex-end"}}>
+          <TouchableOpacity style={{padding:5,height:30,backgroundColor:"grey", justifyContent:"center",alignItems:"center", borderBottomLeftRadius:10,borderBottomRightRadius:10}}>
+            <Text>Apply</Text>
+          </TouchableOpacity>
+          </View>
         </View>
-
-
-      </ScrollView>
-    </View>
+      )}
+      keyExtractor={item => item.id}
+    />
+  </View>
   );
 }
 
@@ -34,7 +77,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.primary,
-    padding: 20,
+    padding:10,
   },
   title: {
     fontWeight: 'bold',

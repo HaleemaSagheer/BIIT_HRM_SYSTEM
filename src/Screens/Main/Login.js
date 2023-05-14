@@ -1,322 +1,135 @@
-import {StyleSheet, Text, Image, View, TouchableOpacity} from 'react-native';
-import {Picker} from '@react-native-picker/picker';
-import {React, useState} from 'react';
-import {Button, TextInput} from 'react-native-paper';
-import {ScrollView} from 'react-native-gesture-handler';
-import {colors} from '../../color/Theme';
+import { StyleSheet, Text, Image, View, TouchableOpacity } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
+import { React, useEffect, useState } from 'react';
+import { Button, TextInput } from 'react-native-paper';
+import { ScrollView } from 'react-native-gesture-handler';
+import { colors } from '../../color/Theme';
 import IP from '../../component/IP';
 import Input from '../../component/Input';
-
+import CheckBox from '@react-native-community/checkbox';
 import axios from 'axios';
-import { Button, TextInput, Searchbar } from 'react-native-paper';
 import { Icon } from 'react-native-paper/lib/typescript/components/Avatar/Avatar';
 import { Entypo } from 'react-native-vector-icons/Entypo';
-import { colors } from '../../color/Theme';
+
 //import {con} from '../src/component/Ip';
 
 export default function Login({ navigation }) {
-  //const IP = con.Ip.IP;
-
-import CheckBox from '@react-native-community/checkbox';
-
-export default function Register({navigation}) {
-  const [isEducated, setIsEducated] = useState(false);
-  const [isExperienced, setIsExperienced] = useState(false);
-  const [fname, setFname] = useState('');
-  const [lname, setLname] = useState('');
   const [email, setEmail] = useState('');
-  const [mobile, setMobile] = useState('');
-  const [cnic, setCnic] = useState('');
-  const [dob, setDob] = useState('');
-  const [gender, setGender] = useState('');
-  const [address, setAddress] = useState('');
-  const [role, setRole] = useState('Applicant');
   const [password, setPassword] = useState('');
-
-  const loginHandler = async () => {
-    //console.log('Entered');
-    // try {
-    //   const response = await fetch(
-    //     `http://${IP}/BIIT_HRM_System/api/User/Login?email=${email}&password=${password}`,
-    //     // `http://192.168.18.66/BIITHRMSystem/api/User/Login?email=${email}&password=${password} `,
-    //     {
-    //       method: 'Post',
-    //     },
-    //   );
-
-    //   const data = await response.json();
-    //   console.log(response);
-    //   console.log(data.login.role);
-    //   if (data.login.role == 'Applicant') {
-    //     navigation.navigate('ApplicantNavigator', { userData: data.login });
-    //   }
-    //   if (data.login.role == 'Employee') {
-    //     navigation.navigate('EmployeeNavigator', { userData: data.login });
-    //   }
-    //   if (data.login.role == 'Guard') {
-    //     navigation.navigate('GuardNavigator', { userData: data.login });
-    //   }
-
-    //   if (data.login.role == 'HR') {
-    //     navigation.navigate('HrNavigator', { userData: data.login });
-    //   }
-    // } catch (err) {
-    //   console.log(err);
-    // }
-
-    await axios.get(`http://${IP}/HrmSystem/api/User/Login?email=${email}&password=${password}`).then((response)=>{
-      console.log(response.data.role)
-      if (response.data.role == 'applicant') {
-            navigation.navigate('ApplicantNavigator', { userData: response.data });
-          }
-          if (response.data.role == 'employee') {
-            navigation.navigate('EmployeeNavigator', { userData: response.data });
-          }
-          if (response.data.role == 'guard') {
-            navigation.navigate('GuardNavigator', { userData: response.data });
-          }
-    
-          if (response.data.role == 'hr') {
-            navigation.navigate('HrNavigator', { userData: response.data });
-          }
-
+  const getUser=async()=>{
+    await axios.get(`http://192.168.93.37/HrmSystem/api/Job/JobGet`).then((response)=>{
+      console.log(response.data)
     }).catch((error)=>{
       console.log(error)
-    })
+    })  }
+    useEffect(()=>{
+      getUser()
+    },[])
+  const loginHandler = async () => {
 
+    console.log(email)
+    console.log(password)
+    await axios.get(`http://192.168.93.37/HrmSystem/api/User/Login?email=${email}&password=${password}`).then((response) => {
+      console.log(response.data.role)
+      if (response.data.role == 'applicant') {
+        navigation.navigate('ApplicantNavigator', { userData: response.data });
+      }
+      if (response.data.role == 'employee') {
+        navigation.navigate('EmployeeNavigator', { userData: response.data });
+      }
+      if (response.data.role == 'guard') {
+        navigation.navigate('GuardNavigator', { userData: response.data });
+      }
+
+      if (response.data.role == 'hr') {
+        navigation.navigate('HrNavigator', { userData: response.data });
+      }
+
+    }).catch((error) => {
+      console.log("error",error)
+    })
+  }
 
 
   const [confirmPassword, setConfirmPassword] = useState('');
-  const handleLogin = () => {
-    navigation.navigate('Login');
+  const handleRegister = () => {
+    navigation.navigate('Register');
   };
-  const handleRegister = async () => {
-    try {
-      if (password == confirmPassword) {
-        const response = await fetch(
-          `http://${IP}/BIIT_HRM_System/api/User/RegisterUser`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              Fname: fname,
-              Lname: lname,
-              email: email,
-              mobile: mobile,
-              cnic: cnic,
-              dob: dob,
-              gender: gender,
-              address: address,
-              password: password,
-              role: role,
-            }),
-          },
-        );
-        navigation.navigate('Login');
-
-        const data = await response.json();
-
-        // handle response from API here, such as displaying success message or error message
-      }
-    } catch (error) {
-      console.error(error);
-      // handle error here, such as displaying error message
-    }
-
-  };
+  const handleForgotPassword=()=>{
+    navigation.navigate('ForgotPassword');
+  }
+  
   return (
     <View style={styles.container}>
-      <ScrollView>
-        <View style={styles.ImageView}>
-          <Image
-            style={styles.Image}
-            source={require('../../Images/adduser.png')}
-          />
-        </View>
-        <Text style={styles.title}>Sign Up</Text>
-        {/* <TextInput
-          label="FirstName"
-          value={fname}
-          mode={'outlined'}
-          onChangeText={val => {
-            setFname(val);
-          }}
-          left={<TextInput.Icon icon={'email-outline'} iconColor="#22C55E" />}
-          style={styles.input}
-        /> */}
-        <Input
-          title="First Name"
-          placeholder={'Your First name'}
-          variant="simple"
-          value={fname}
-          setValue={setFname}
-        />
 
-        {/* <TextInput
-          label="LastName"
-          value={lname}
-          mode={'outlined'}
-          onChangeText={val => {
-            setLname(val);
-          }}
-          left={<TextInput.Icon icon={'email-outline'} iconColor="#22C55E" />}
-          style={styles.input}
-        /> */}
-        <Input
-          title="Last Name"
-          placeholder={'Your Last name'}
-          variant="simple"
-          value={lname}
-          setValue={setLname}
+      <View style={styles.ImageView}>
+        <Image
+          style={styles.Image}
+          source={require('../../Images/login.png')}
         />
-        {/* <TextInput
-          label="Email"
-          value={email}
-          mode={'outlined'}
-          onChangeText={val => {
-            setEmail(val);
-          }}
-          left={<TextInput.Icon icon={'email-outline'} iconColor="#22C55E" />}
-          style={styles.input}
-        /> */}
-        <Input
-          title="Email"
-          placeholder={'Your email address'}
-          variant="simple"
-          icon={'email-outline'}
-          value={email}
-          setValue={setEmail}
-        />
-        {/* Mobile Number */}
-        {/* <TextInput
-          label="Mobile No"
-          value={mobile}
-          mode={'outlined'}
-          onChangeText={val => {
-            setMobile(val);
-          }}
-          left={<TextInput.Icon icon={'email-outline'} iconColor="#22C55E" />}
-          style={styles.input}
-        /> */}
-        <Input
-          title="Phone Number"
-          placeholder={'Phone Number'}
-          variant="simple"
-          value={mobile}
-          setValue={setMobile}
-        />
-        {/* //CNIC */}
-        {/* <TextInput
-          label="CNIC"
-          value={cnic}
-          mode={'outlined'}
-          onChangeText={val => {
-            setCnic(val);
-          }}
-          left={<TextInput.Icon icon={'email-outline'} iconColor="#22C55E" />}
-          style={styles.input}
-        /> */}
-        <Input
-          title="CNIC"
-          placeholder="Enter your Cnic"
-          variant="simple"
-          value={cnic}
-          setValue={setCnic}
-        />
-        {/* //address */}
-        {/* <TextInput
-          label="Address"
-          value={address}
-          mode={'outlined'}
-          onChangeText={val => {
-            setAddress(val);
-          }}
-          left={<TextInput.Icon icon={'email-outline'} iconColor="#22C55E" />}
-          style={styles.input}
-        /> */}
-        <Input
-          title="Location"
-          placeholder={'Location'}
-          variant="icon"
-          icon="location-pin"
-          value={address}
-          setValue={setAddress}
-        />
-        {/* <TextInput
-          label="Password"
-          value={password}
-          mode={'outlined'}
-          secureTextEntry={true}
-          onChangeText={val => {
-            setPassword(val);
-          }}
-          left={<TextInput.Icon icon={'key'} iconColor="#22C55E" />}
-          right={<TextInput.Icon icon="eye" />}
-          style={styles.input}
-        />
-        <TextInput
-          label=" Confirm Password"
-          value={confirmPassword}
-          mode={'outlined'}
-          secureTextEntry={true}
-          onChangeText={val => {
-            setConfirmPassword(val);
-          }}
-          left={<TextInput.Icon icon={'key'} iconColor="#22C55E" />}
-          right={<TextInput.Icon icon="eye" />}
-          style={styles.input}
-        /> */}
+      </View>
+      <Text style={styles.title}>Login</Text>
 
-        <Input
-          title="Password"
-          placeholder={'Password'}
-          variant="passwordIcon"
-          icon="remove-red-eye"
-          value={password}
-          setValue={setPassword}
-        />
-        {/* Icon Input */}
-        <Input
-          title="Confirm Password"
-          placeholder={'Confirm Password'}
-          variant="passwordIcon"
-          icon="remove-red-eye"
-          value={confirmPassword}
-          setValue={setConfirmPassword}
-        />
-        <View style={styles.CheckStyle}>
-          <View style={{flexDirection: 'row'}}>
-            <CheckBox
-              style={styles.CheckStyle}
-              value={isEducated}
-              onValueChange={val => setIsEducated(val)}
-            />
-            <Text style={{color: colors.dark}}>IsEducated?</Text>
-          </View>
-          <View style={{flexDirection: 'row'}}>
-            <CheckBox
-              style={styles.CheckStyle}
-              value={isExperienced}
-              onValueChange={val => setIsExperienced(val)}
-            />
-            <Text style={{color: colors.dark}}>hasExperience?</Text>
-          </View>
-        </View>
-        <Button
-          style={styles.registerbtn}
-          mode="contained"
-          onPress={handleRegister}>
-          Register
-        </Button>
-        <View style={{flexDirection: 'row', padding: 50}}>
-          <Text style={{color: '#000'}}>Already Have an account ?</Text>
-          <TouchableOpacity onPress={handleLogin}>
-            <Text style={styles.txtbtn}>Login Here</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+<View style={{padding:20,}}>
+
+      <TextInput
+        style={styles.input}
+        label="Email"
+        value={email}
+        mode={'outlined'}
+        onChangeText={val => {
+          setEmail(val);
+        }}
+        left={<TextInput.Icon icon={'email-outline'} iconColor="#22C55E" />}
+      />
+      <TextInput
+        label="Password"
+        value={password}
+        mode={'outlined'}
+        secureTextEntry={true}
+        left={<TextInput.Icon icon={'key'} iconColor="#22C55E" />}
+        right={<TextInput.Icon icon="eye" />}
+        onChangeText={val => {
+          setPassword(val);
+        }}
+        style={styles.input}
+      />
+      <View style={{ alignItems: "flex-end", marginTop: 10, }}>
+        <TouchableOpacity onPress={handleForgotPassword}>
+          <Text style={{ fontWeight: 'bold', color: '#000' }}>
+            Forgot Password?
+          </Text>
+        </TouchableOpacity>
+      </View>
+      <View style={{ alignItems: "center" }}>
+        <TouchableOpacity onPress={loginHandler} style={{marginTop:20,width:"100%", backgroundColor:colors.dark,borderRadius:20, justifyContent:"center",alignItems:"center", height:50,}}>
+          <Text style={{ color: colors.white, fontWeight: "800", fontSize: 22 }}>Login</Text>
+        </TouchableOpacity>
+      </View>
+
+</View >
+
+
+
+ 
+      {/* <Button mode="contained" style={styles.btn} onPress={loginHandler}>
+        Login
+      </Button> */}
+
+      <View style={{flexDirection:"row", justifyContent:"center",alignItems:"center", marginTop:20,}}>
+      
+        <Text style={{ color: '#000', fontSize: 16, }}>Don't have an account ? </Text>
+        <TouchableOpacity onPress={handleRegister}>
+          <Text style={styles.txtbtn}>Register</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={{ paddingTop: 10 }}>
+         <View style={{paddingTop: 10}}>
+
+      </View>
+  
+      </View>
+
     </View>
   );
 }
@@ -325,16 +138,16 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.primary,
     flex: 1,
-    paddingHorizontal: 30,
-    paddingVertical: 50,
+  
   },
   CheckStyle: {
     marginLeft: 10,
     color: colors.dark,
   },
   ImageView: {
-    marginLeft: 110,
-    paddingTop: 10,
+   justifyContent:"center",
+   alignItems:"center",
+   marginTop:40,
   },
   Image: {
     height: 200,
@@ -381,10 +194,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   input: {
-    marginLeft: 20,
-    marginTop: 20,
+
     height: 50,
-    width: '90%',
+    width: '100%',
     borderRadius: 5,
     alignSelf: 'center',
   },
