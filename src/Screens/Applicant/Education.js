@@ -7,7 +7,7 @@ import IP from '../../component/IP';
 
 export default function Education({route}) {
   const {userData} = route.params;
-  console.log("Education",userData.Educations)
+  console.log('Education', userData.Educations);
   const [title, setTitle] = useState('');
   const [major, setMajor] = useState('');
   const [board, setBoard] = useState('');
@@ -28,7 +28,7 @@ export default function Education({route}) {
     try {
       console.log(edudata);
       const response = await fetch(
-        `http://${IP}/BIIT_HRM_System/api/Applicant/AddEducation`,
+        `http://${IP}/HRM_System/api/Applicant/AddEducation`,
         {
           method: 'POST',
           headers: {
@@ -69,13 +69,13 @@ export default function Education({route}) {
     <View style={styles.container}>
       <Text style={styles.title}>Educational Infromation </Text>
       <View>
-        <Input
+        {/* <Input
           title="Title"
           placeholder={'Degree Title'}
           variant="simple"
           value={title}
           setValue={setTitle}
-        />
+        /> */}
         {/* <TextInput
           label="Title"
           value={title}
@@ -129,7 +129,11 @@ export default function Education({route}) {
           Add
         </Button>
       </View>
-      <FlatList keyExtractor={item => item.id} data={edudata} renderItem={renderEdu} />
+      <FlatList
+        keyExtractor={item => item.id}
+        data={edudata}
+        renderItem={renderEdu}
+      />
       <Button mode="contained" style={styles.btn} onPress={handleSubmit}>
         Submit
       </Button>

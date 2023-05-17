@@ -1,9 +1,18 @@
-import { StyleSheet, Text, View, ScrollView,FlatList, Touchable, TouchableOpacity } from 'react-native';
-import React ,{useEffect,useState} from 'react';
-import { colors } from '../../color/Theme';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  FlatList,
+  Touchable,
+  TouchableOpacity,
+} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {colors} from '../../color/Theme';
 import axios from 'axios';
+import IP from '../../component/IP';
 export default function Applications({route}) {
-  const { userData } = route.params;
+  const {userData} = route.params;
   const [jobsData, setJobsData] = useState([]);
   useEffect(() => {
     fetchJobs();
@@ -18,23 +27,28 @@ export default function Applications({route}) {
     // } catch (error) {
     //   console.error(error);
     // }
-    await axios.get(`http://192.168.154.37/HrmSystem/api/JobApplication/JobApplicationGet?appid=${userData.Uid}`).then((response)=>{
-      console.log("jOB",response.data)
-      // for (var i=0; i < response.data.length ; i++)
-      //   console.log("in loop",response.data[i].Educations)
-      // // setJobsData(response.data)
-    }).catch((error)=>{
-      console.log(error)
-    })
+    await axios
+      .get(
+        `http://${IP}/HrmSystem/api/JobApplication/JobApplicationGet?appid=${userData.Uid}`,
+      )
+      .then(response => {
+        console.log('jOB', response.data);
+        // for (var i=0; i < response.data.length ; i++)
+        //   console.log("in loop",response.data[i].Educations)
+        // // setJobsData(response.data)
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
   return (
     <View style={styles.container}>
-    {/* <View>
+      {/* <View>
       <Image style={styles.Image} source={require('../../Images/job.png')} />
     </View> */}
-    {/* <Text style={styles.title}> Jobs</Text> */}
-    {/* // Searchbar */}
-    {/* <View style={styles.searcbar}>
+      {/* <Text style={styles.title}> Jobs</Text> */}
+      {/* // Searchbar */}
+      {/* <View style={styles.searcbar}>
       <Searchbar
         placeholder="Search"
         onChangeText={onChangeSearch}
@@ -42,7 +56,7 @@ export default function Applications({route}) {
       />
     </View> */}
 
-    {/* <FlatList
+      {/* <FlatList
     columnWrapperStyle={{
       flex:1, 
       justifyContent:"space-between"
@@ -69,7 +83,7 @@ export default function Applications({route}) {
       )}
       keyExtractor={item => item.id}
     /> */}
-  </View>
+    </View>
   );
 }
 
@@ -77,7 +91,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.primary,
-    padding:10,
+    padding: 10,
   },
   title: {
     fontWeight: 'bold',

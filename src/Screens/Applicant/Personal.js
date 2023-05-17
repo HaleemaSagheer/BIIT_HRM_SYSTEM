@@ -18,6 +18,7 @@ import IP from '../../component/IP';
 import DatePicker from 'react-native-date-picker';
 import {IconButton} from 'react-native-paper';
 import Input from '../../component/Input';
+import ImageIP from '../../component/ImageIP';
 export default function Personal({route, navigation}) {
   const {userData} = route.params;
   // console.log('Checking');
@@ -34,13 +35,12 @@ export default function Personal({route, navigation}) {
   const [gender, setGender] = useState(userData.gender);
   const [email, setEmail] = useState(userData.email);
   const [imageData, setImageData] = useState({
-    // uri: `http://192.168.0.191/BIIT_HRM_System/Images/${userData.Image}`,
-    uri: `http://${IP}/HrmSystem/Images/${userData.Image}`,
+    uri: `${ImageIP}${userData.image}`,
   });
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
 
-  console.log(`${JSON.stringify(userData)}/${userData.Image}`);
+  //console.log(`${JSON.stringify(userData)}/${userData.image}`);
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
     setShow(false);
@@ -68,7 +68,7 @@ export default function Personal({route, navigation}) {
       data.append('email', email);
       data.append('mobile', mobileNo);
       data.append('cnic', cnic);
-      console.log('till CNIC');
+      //console.log('till CNIC');
       data.append('dob', dob);
       // data.append(
       //   'dob',
@@ -78,21 +78,20 @@ export default function Personal({route, navigation}) {
       data.append('gender', gender);
       data.append('address', address);
       console.log('till Address');
-      data.append('Image', imageData);
-      console.log('After Image');
-      console.log(data);
+      data.append('image', imageData);
       const requestOptions = {
         method: 'POST',
         body: data,
       };
 
       const response = await fetch(
-        `http://${IP}/BIIT_HRM_System/api/Applicant/UpdateUser`,
+        `http://${IP}/HRM_System/api/Applicant/UpdateUser`,
         requestOptions,
       );
       const results = await response.json();
       ToastAndroid.show(results, ToastAndroid.SHORT);
-      clearStates();
+      //clearStates();
+      navigation.navigate('Profile');
     } catch (error) {
       console.log('ERROR REQUEST', error);
     }
@@ -259,8 +258,8 @@ export default function Personal({route, navigation}) {
       <RadioButton.Group
         value={gender}
         onValueChange={value => setGender(value)}>
-        <RadioButton.Item uncheckedColor="red" label="Male" value="Male" />
-        <RadioButton.Item uncheckedColor="red" label="Female" value="Female" />
+        <RadioButton.Item uncheckedColor="red" label="Male" value="male" />
+        <RadioButton.Item uncheckedColor="red" label="Female" value="female" />
       </RadioButton.Group>
 
       <View>
@@ -278,11 +277,12 @@ export default function Personal({route, navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding:20,
+    paddingHorizontal: 40,
+    paddingVertical: 40,
     backgroundColor: colors.primary,
   },
   title: {
- 
+    marginTop: 10,
     marginBottom: 10,
     fontSize: 20,
     fontWeight: '700',

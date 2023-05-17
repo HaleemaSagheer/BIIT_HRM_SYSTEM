@@ -1,78 +1,116 @@
-import { StyleSheet, Text, Image, View, TouchableOpacity } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
-import { React, useEffect, useState } from 'react';
-import { Button, TextInput } from 'react-native-paper';
-import { ScrollView } from 'react-native-gesture-handler';
-import { colors } from '../../color/Theme';
+import {StyleSheet, Text, Image, View, TouchableOpacity} from 'react-native';
+import {Picker} from '@react-native-picker/picker';
+import {React, useEffect, useState} from 'react';
+import {Button, TextInput} from 'react-native-paper';
+import {ScrollView} from 'react-native-gesture-handler';
+import {colors} from '../../color/Theme';
 import IP from '../../component/IP';
 import Input from '../../component/Input';
 import CheckBox from '@react-native-community/checkbox';
 import axios from 'axios';
-import { Icon } from 'react-native-paper/lib/typescript/components/Avatar/Avatar';
-import { Entypo } from 'react-native-vector-icons/Entypo';
+import {Icon} from 'react-native-paper/lib/typescript/components/Avatar/Avatar';
+import {Entypo} from 'react-native-vector-icons/Entypo';
 
 //import {con} from '../src/component/Ip';
 
-export default function Login({ navigation }) {
+export default function Login({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const getUser=async()=>{
-    await axios.get(`http://192.168.93.37/HrmSystem/api/Job/JobGet`).then((response)=>{
-      console.log(response.data)
-    }).catch((error)=>{
-      console.log(error)
-    })  }
-    useEffect(()=>{
-      getUser()
-    },[])
-  const loginHandler = async () => {
+  // const getUser = async () => {
+  //   await axios
+  //     .get(`http://${IP}/HRM_System/api/Job/JobGet`)
+  //     .then(response => {
+  //       console.log(response.data);
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+  // };
+  // useEffect(() => {
+  //   getUser();
+  // }, []);
 
-    console.log(email)
-    console.log(password)
-    await axios.get(`http://192.168.154.37/HrmSystem/api/User/Login?email=${email}&password=${password}`).then((response) => {
-      console.log(response.data.role)
-      if (response.data.role == 'applicant') {
-        navigation.navigate('ApplicantNavigator', { userData: response.data });
-      }
-      if (response.data.role == 'employee') {
-        navigation.navigate('EmployeeNavigator', { userData: response.data });
-      }
-      if (response.data.role == 'guard') {
-        navigation.navigate('GuardNavigator', { userData: response.data });
-      }
+  // const loginHandler = async () => {
+  //   console.log(email);
+  //   console.log(password);
+  //   await axios
+  //     .get(
+  //       `http://${IP}/HRM_System/api/User/Login?email=${email}&password=${password}`,
+  //     )
+  //     .then(response => {
+  //       console.log(response.data.role);
+  //       if (response.data.role == 'applicant') {
+  //         navigation.navigate('ApplicantNavigator', {userData: response.data});
+  //       }
+  //       if (response.data.role == 'employee') {
+  //         navigation.navigate('EmployeeNavigator', {userData: response.data});
+  //       }
+  //       if (response.data.role == 'guard') {
+  //         navigation.navigate('GuardNavigator', {userData: response.data});
+  //       }
 
-      if (response.data.role == 'hr') {
-        navigation.navigate('HrNavigator', { userData: response.data });
-      }
-
-    }).catch((error) => {
-      console.log("error",error)
-    })
-  }
-
+  //       if (response.data.role == 'hr') {
+  //         navigation.navigate('HrNavigator', {userData: response.data});
+  //       }
+  //     })
+  //     .catch(error => {
+  //       console.log('error', error);
+  //     });
+  // };
 
   const [confirmPassword, setConfirmPassword] = useState('');
   const handleRegister = () => {
     navigation.navigate('Register');
   };
-  const handleForgotPassword=()=>{
+  const handleForgotPassword = () => {
     navigation.navigate('ForgotPassword');
-  }
-  
+  };
+
+  const loginHandler = async () => {
+    //console.log('Entered');
+    try {
+      const response = await fetch(
+        `http://${IP}/HRM_System/api/User/Login?email=${email}&password=${password}`,
+        // `http://192.168.18.66/BIITHRMSystem/api/User/Login?email=${email}&password=${password} `,
+        {
+          method: 'Post',
+        },
+      );
+
+      const data = await response.json();
+      console.log(response);
+      console.log(data);
+      console.log(data.login.Fname);
+      //console.log(data.login.role);
+      //console.log('data' + data.login);
+      if (data.login.role == 'Applicant') {
+        navigation.navigate('ApplicantNavigator', {userData: data.login});
+      }
+      if (data.login.role == 'Employee') {
+        navigation.navigate('EmployeeNavigator', {userData: data.login});
+      }
+      if (data.login.role == 'Guard') {
+        navigation.navigate('GuardNavigator', {userData: data.login});
+      }
+
+      if (data.login.role == 'HR') {
+        navigation.navigate('HrNavigator', {userData: data.login});
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <View style={styles.container}>
-
       <View style={styles.ImageView}>
         <Image
           style={styles.Image}
           source={require('../../Images/login.png')}
         />
       </View>
-      <Text style={styles.title}>Login</Text>
-
-<View style={{padding:20,}}>
-
-      <TextInput
+      <Text style={styles.logintitle}>Login</Text>
+      {/* <TextInput
         style={styles.input}
         label="Email"
         value={email}
@@ -81,8 +119,25 @@ export default function Login({ navigation }) {
           setEmail(val);
         }}
         left={<TextInput.Icon icon={'email-outline'} iconColor="#22C55E" />}
+      /> */}
+      <Input
+        title="Email"
+        placeholder={'Enter your password '}
+        variant="simple"
+        value={email}
+        setValue={setEmail}
       />
-      <TextInput
+      {/* Password Input */}
+      <Input
+        title="Password"
+        placeholder={'************'}
+        variant="passwordIcon"
+        icon="remove-red-eye"
+        value={password}
+        setValue={setPassword}
+      />
+
+      {/* <TextInput
         label="Password"
         value={password}
         mode={'outlined'}
@@ -93,61 +148,40 @@ export default function Login({ navigation }) {
           setPassword(val);
         }}
         style={styles.input}
-      />
-      <View style={{ alignItems: "flex-end", marginTop: 10, }}>
-        <TouchableOpacity onPress={handleForgotPassword}>
-          <Text style={{ fontWeight: 'bold', color: '#000' }}>
-            Forgot Password?
-          </Text>
-        </TouchableOpacity>
-      </View>
-      <View style={{ alignItems: "center" }}>
-        <TouchableOpacity onPress={loginHandler} style={{marginTop:20,width:"100%", backgroundColor:colors.dark,borderRadius:20, justifyContent:"center",alignItems:"center", height:50,}}>
-          <Text style={{ color: colors.white, fontWeight: "800", fontSize: 22 }}>Login</Text>
-        </TouchableOpacity>
-      </View>
+      /> */}
 
-</View >
-
-
-
- 
-      {/* <Button mode="contained" style={styles.btn} onPress={loginHandler}>
+      {/* BUTTON */}
+      <Button mode="contained" style={styles.btn} onPress={loginHandler}>
         Login
-      </Button> */}
-
-      <View style={{flexDirection:"row", justifyContent:"center",alignItems:"center", marginTop:20,}}>
-      
-        <Text style={{ color: '#000', fontSize: 16, }}>Don't have an account ? </Text>
+      </Button>
+      <View style={styles.InnerView}>
+        <Text style={{color: '#000'}}>Don't have an account ? </Text>
         <TouchableOpacity onPress={handleRegister}>
           <Text style={styles.txtbtn}>Register</Text>
         </TouchableOpacity>
       </View>
-      <View style={{ paddingTop: 10 }}>
-         <View style={{paddingTop: 10}}>
-
+      <View style={{paddingTop: 10}}>
+        <TouchableOpacity onPress={handleForgotPassword}>
+          <Text style={{marginLeft: '60%', fontWeight: 'bold', color: '#000'}}>
+            Forgot Password?
+          </Text>
+        </TouchableOpacity>
       </View>
-  
-      </View>
-
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.primary,
     flex: 1,
-  
-  },
-  CheckStyle: {
-    marginLeft: 10,
-    color: colors.dark,
+    backgroundColor: colors.primary,
+    paddingHorizontal: 30,
+    paddingVertical: 50,
   },
   ImageView: {
-   justifyContent:"center",
-   alignItems:"center",
-   marginTop:40,
+    marginLeft: 110,
+    paddingTop: 20,
+    paddingBottom: 30,
   },
   Image: {
     height: 200,
@@ -156,48 +190,71 @@ const styles = StyleSheet.create({
     borderWidth: 10,
     borderColor: colors.dark,
   },
-
-  title: {
+  logintitle: {
     fontSize: 25,
     fontWeight: '800',
     color: colors.dark,
+
     alignSelf: 'center',
-    marginTop: 10,
+  },
+  input: {
+    marginLeft: 20,
+    marginTop: 30,
+    height: 50,
+    width: '90%',
+    borderRadius: 10,
+    alignSelf: 'center',
+  },
+  btn: {
+    backgroundColor: colors.dark,
+    marginTop: 30,
+    height: 50,
+    width: '50%',
+    alignSelf: 'center',
+    fontWeight: '800',
   },
   txtbtn: {
     fontSize: 16,
     color: 'red',
     textDecorationLine: 'underline',
   },
-  registerbtn: {
-    width: '50%',
-    marginTop: 15,
-    alignSelf: 'center',
-    backgroundColor: colors.dark,
-  },
-  inputdropdown: {
-    height: 40,
-    width: '60%',
-    color: 'white',
-    borderWidth: 2,
-    borderColor: 'red',
-    borderRadius: 10,
-    marginLeft: 80,
-    paddingHorizontal: 10,
-    marginBottom: 16,
-    backgroundColor: '#112233',
-  },
-  label: {
-    fontSize: 16,
+  InnerView: {
+    flexDirection: 'row',
+    paddingTop: 50,
+    paddingLeft: 70,
     color: '#000',
-    marginBottom: 8,
-    marginTop: 10,
   },
-  input: {
-
-    height: 50,
-    width: '100%',
-    borderRadius: 5,
-   
+  title: {
+    fontSize: 22,
+    fontWeight: '700',
+    color: colors.dark,
+    marginBottom: 30,
+  },
+  termsText: {
+    color: colors.dark,
+    fontSize: 14,
+  },
+  primaryText: {
+    color: colors.primary,
+    fontWeight: 'bold',
+  },
+  buttonContainer: {
+    marginVertical: 20,
+  },
+  termsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  bottomStripContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  primaryText: {
+    color: colors.primary,
+    fontWeight: 'bold',
+  },
+  lightText: {
+    color: colors.dark,
   },
 });

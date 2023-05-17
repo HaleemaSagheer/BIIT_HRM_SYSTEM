@@ -29,7 +29,7 @@ export default function Register({navigation}) {
     try {
       if (password == confirmPassword) {
         const response = await fetch(
-          `http://${IP}/BIIT_HRM_System/api/User/RegisterUser`,
+          `http://${IP}/HRM_System/api/User/RegisterUser`,
           {
             method: 'POST',
             headers: {

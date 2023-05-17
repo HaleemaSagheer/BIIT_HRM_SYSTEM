@@ -1,10 +1,10 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
-import { colors } from '../../color/Theme';
+import {colors} from '../../color/Theme';
 // import {TouchableOpacity} from 'react-native-gesture-handler';
 
-export default function Applicant({ route, navigation }) {
-  const {userData }= route.params;
+export default function Applicant({route, navigation}) {
+  const {userData} = route.params;
   // console.log('Applicant');
   // console.log(userData.Fname);
   const onPressProfile = () => {
@@ -25,8 +25,11 @@ export default function Applicant({ route, navigation }) {
           source={require('../../Images/applicant.png')}
         />
       </View>
-      <View style={{alignItems:"center", width:"100%" }}>
-      <Text style={styles.title}>Welcome{"  "}{userData.Lname+' '+userData.Fname}</Text>
+      <View style={{alignItems: 'center', width: '100%'}}>
+        <Text style={styles.title}>
+          Welcome{'  '}
+          {userData.Fname + ' ' + userData.Lname}
+        </Text>
       </View>
       {/*  */}
     </View>
@@ -44,8 +47,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   ImageView: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 30,
     marginBottom: 20,
   },
@@ -58,10 +61,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 25,
 
-    color: "black",
+    color: 'black',
     marginTop: 10,
     marginBottom: 10,
-
   },
 
   btnView: {
