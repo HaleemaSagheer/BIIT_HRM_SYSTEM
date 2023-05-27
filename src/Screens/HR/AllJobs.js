@@ -5,6 +5,7 @@ import {Button, TextInput, Card, Paragraph} from 'react-native-paper';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import IP from '../../component/IP';
 
 const AllJobs = ({navigation}) => {
   const [jobsData, setJobsData] = useState([]);
@@ -14,7 +15,7 @@ const AllJobs = ({navigation}) => {
   const fetchdata = async () => {
     try {
       const response = await fetch(
-        `http://192.168.124.37/HrmSystem/api/Job/JobGet`,
+        `http://${IP}/HRM_System/api/Job/GetAllJobs`,
       );
       const data = await response.json();
       setJobsData(data);
@@ -33,7 +34,7 @@ const AllJobs = ({navigation}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>All Jobs</Text>
-      {/* <FlatList
+      <FlatList
         data={jobsData}
         renderItem={({item}) => (
           <Card style={styles.cardContainer}>
@@ -61,7 +62,7 @@ const AllJobs = ({navigation}) => {
               </View>
             </Card.Content>
             <Card.Actions style={styles.cardActions}>
-              <Button  mode="contained" onPress={() => handleViewJob({item})}>
+              <Button mode="contained" onPress={() => handleViewJob({item})}>
                 ViewJob
               </Button>
               <Button mode="contained" onPress={() => handleDelete({item})}>
@@ -73,8 +74,8 @@ const AllJobs = ({navigation}) => {
             </Card.Actions>
           </Card>
         )}
-        keyExtractor={item => item.id}
-      /> */}
+        keyExtractor={item => item.id.toString()}
+      />
     </View>
   );
 };

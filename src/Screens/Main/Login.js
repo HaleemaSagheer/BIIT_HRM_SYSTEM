@@ -89,11 +89,11 @@ export default function Login({navigation}) {
       if (data.login.role == 'Employee') {
         navigation.navigate('EmployeeNavigator', {userData: data.login});
       }
-      if (data.login.role == 'Guard') {
+      if (data.login.role == 'guard') {
         navigation.navigate('GuardNavigator', {userData: data.login});
       }
 
-      if (data.login.role == 'HR') {
+      if (data.login.role == 'hr') {
         navigation.navigate('HrNavigator', {userData: data.login});
       }
     } catch (err) {

@@ -8,6 +8,9 @@ import AttendanceReport from '../Screens/HR/AttendanceReport';
 import HR from '../Screens/HR/HR';
 import AllJobs from '../Screens/HR/AllJobs';
 import JobDetails from '../Screens/HR/JobDetails';
+import Committees from '../Screens/HR/Committees';
+import NewCommittee from '../Screens/HR/NewCommittee';
+import Staff from '../Screens/HR/Staff';
 
 const Drawer = createDrawerNavigator();
 
@@ -39,10 +42,28 @@ const HrNavigator = ({route}) => {
         component={AttendanceReport}
         initialParams={{userData}}
       />
+
       <Drawer.Screen
         options={{drawerItemStyle: {height: 0}}}
         name="JobDetails"
         component={JobDetails}
+        initialParams={{userData}}
+      />
+      <Drawer.Screen
+        name="Committees"
+        component={Committees}
+        initialParams={{userData}}
+      />
+      <Drawer.Screen
+        options={{drawerItemStyle: {height: 0}}}
+        name="NewCommittee"
+        component={NewCommittee}
+        initialParams={{userData}}
+      />
+      <Drawer.Screen
+        options={{drawerItemStyle: {height: 0}}}
+        name="Staff"
+        component={Staff}
         initialParams={{userData}}
       />
     </Drawer.Navigator>
